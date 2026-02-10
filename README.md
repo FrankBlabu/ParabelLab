@@ -25,8 +25,9 @@
 
 ## Project Status
 
-The project is currently in **active development**. The infrastructure (Step 01)
-and the pure-function math engine (Step 02) are implemented. See
+The project is currently in **active development**. The infrastructure (Step 01),
+the pure-function math engine (Step 02), and the SVG-based coordinate system
+with parabola rendering (Step 03) are implemented. See
 [doc/planning/00-overview.md](doc/planning/00-overview.md) for the detailed
 technical plan and implementation roadmap.
 

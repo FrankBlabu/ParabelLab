@@ -59,3 +59,17 @@
 - The `vitest` command runs in watch mode by default, which never exits. For CI and VSCode task
   usage the `test` script must use `vitest run` (single-run mode) so the process terminates
   after the suite completes.
+
+## Issue 6 — Coordinate System & Parabola Rendering
+
+- SVG coordinate space has an inverted y-axis (positive y points downward). The transformation
+  formula `y_svg = height - ((y_math - yMin) / (yMax - yMin)) * height` handles this correctly.
+- `React.memo` is useful for static sub-components (Grid, Axes) that rarely change, but the
+  parabola curve re-renders on every parameter change and should not be memoised excessively.
+- Test files nested three levels deep (e.g. `tests/components/graph/`) need `../../../src/`
+  import paths, not `../../src/`. Always verify the relative depth when creating test files
+  in new subdirectories.
+- SVG `<clipPath>` is essential for clipping the parabola curve to the viewBox when the
+  curve extends beyond the visible viewport (e.g. for large `|a|` values or extreme y-offsets).
+- Using `data-testid` attributes on SVG groups and elements enables reliable React Testing
+  Library queries on SVG content rendered in jsdom.
