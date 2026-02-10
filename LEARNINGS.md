@@ -73,3 +73,23 @@
   curve extends beyond the visible viewport (e.g. for large `|a|` values or extreme y-offsets).
 - Using `data-testid` attributes on SVG groups and elements enables reliable React Testing
   Library queries on SVG content rendered in jsdom.
+
+## Issue 7 — Interactive Parabola Explorer
+
+- Range `<input type="range">` elements cannot be cleared with `user.clear()` in React Testing
+  Library. Use `fireEvent.change(element, { target: { value: 'newValue' } })` instead for
+  testing slider interactions.
+- When a parameter value can cause errors in derived computations (like `a=0` in parabola
+  functions), handle the degenerate case gracefully in hooks. Return safe fallback values
+  (e.g., `{ a: 0, b: 0, c: 0 }`) instead of propagating errors that crash components.
+- Conditional rendering based on parameter validity prevents runtime errors in child
+  components. For `a=0`, hiding the coordinate system and displaying a placeholder message
+  avoids errors in `computeZeros` and other parabola functions that expect `a ≠ 0`.
+- `useMemo` is essential for expensive derived calculations (like `vertexToNormal`) to
+  avoid recomputing on every render. Dependency arrays should include all values used in
+  the computation.
+- Custom hooks like `useParabola` provide clean separation of state management from UI
+  components, making both easier to test independently. Hooks should return all necessary
+  state, derived values, and setter functions for complete control.
+- Responsive layouts with Tailwind's `flex-col lg:flex-row` pattern work well for adaptive
+  designs that stack vertically on mobile and display side-by-side on larger screens.
