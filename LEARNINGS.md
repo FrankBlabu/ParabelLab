@@ -93,3 +93,12 @@
   state, derived values, and setter functions for complete control.
 - Responsive layouts with Tailwind's `flex-col lg:flex-row` pattern work well for adaptive
   designs that stack vertically on mobile and display side-by-side on larger screens.
+
+## Issue 8 — Learning Module Framework
+
+- Deterministic, seeded randomness in exercise generators makes tests stable while still
+  producing varied content for the UI.
+- Rendering fill-in-the-blank templates by parsing `{blankId}` placeholders keeps exercise
+  steps declarative and avoids hardcoding input layouts.
+- Text inputs with `inputMode="decimal"` allow negative numbers and decimals while
+  still bringing up numeric keyboards on touch devices.
