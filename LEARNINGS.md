@@ -21,3 +21,28 @@
   array to expose development server ports (e.g., Vite on 5173) to the browser.
 - Comprehensive documentation for Codespaces should include: setup instructions, development
   workflows, extension information, troubleshooting, and FAQs to reduce support burden.
+
+## Issue 4 — Project Setup & Infrastructure
+
+- Manual project scaffolding (creating files directly) is more reliable than using `npm create vite`
+  when a directory contains non-source files that should be preserved (like documentation).
+- Tailwind CSS v3 uses PostCSS with `@tailwind` directives, not `@import "tailwindcss"`. The
+  latter causes PostCSS parse errors when combined with postcss-import. Always use the standard
+  `@tailwind base/components/utilities` approach.
+- ESLint configuration format changed significantly in v8.x to use flat config arrays instead
+  of `.eslintrc.json`. The `typescript-eslint` package doesn't exist as a single package name
+  — use individual packages: `@typescript-eslint/parser` and `@typescript-eslint/eslint-plugin`.
+- When npm install encounters peer dependency conflicts, `--legacy-peer-deps` is a reasonable
+  workaround for development setups, though it's better to resolve version conflicts by
+  adjusting dependency versions to be compatible.
+- React Router v6 generates warnings about future v7 flags (`v7_startTransition`,
+  `v7_relativeSplatPath`), which are informational and can be safely ignored during development.
+  These can be addressed when upgrading to React Router v7.
+- Import paths in test files should be relative to the test file location, not adjusted with `../src/`.
+  Using `../../src/App` from `tests/pages/App.test.tsx` correctly traverses to the source file.
+- VSCode tasks defined in `.vscode/tasks.json` provide a better developer experience than shell
+  commands for repeated workflows (dev, build, lint, test), enabling quick invocation and
+  background process management.
+- A clean project structure with separate `src/` and `tests/` directories mirroring each other
+  makes it easy to scale as components and utilities are added. Empty directories are fine
+  during the scaffold phase and can be populated in subsequent feature implementation steps.
