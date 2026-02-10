@@ -14,6 +14,7 @@ Given a pull request, perform the necessary steps in the following order:
 
 ## Implementation
 
+- Ask for the pull request URL or ID. If the user provides a URL, extract the pull request ID from the URL.
 - Check if the current branch is the branch the pull request relates to. If not, switch to the correct branch.
 - Check if the pull request is already closed. In this case, check if the reviewer suggestions were already implemented or are outdated. For the suggestions which are not implemented yet and not outdated, assume that they were added to the PR after the PR was closed and merged. Open a new branch, implement the suggestions and create a new PR in this case.
 - Read through the peer review related comments of the given pull request and understand the suggested changes.
