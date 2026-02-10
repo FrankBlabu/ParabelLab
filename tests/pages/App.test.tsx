@@ -6,27 +6,26 @@ import App from '../../src/App';
  * Smoke test for the App component
  *
  * Tests that the main App component renders without crashing and displays
- * expected content. This is a basic validation that the application shell
- * initializes properly.
+ * the ExplorerPage. This validates that the application routing and shell
+ * initialize properly.
  */
 describe('App Component', () => {
   it('should render without crashing', () => {
     render(<App />);
 
-    // Verify that the main heading is present
+    // Verify that the ExplorerPage heading is present
     const heading = screen.getByRole('heading', {
-      name: /ParabelLab/i,
+      name: /Parabel-Explorer/i,
     });
     expect(heading).toBeInTheDocument();
   });
 
-  it('should display the application title and subtitle', () => {
+  it('should display the ExplorerPage by default', () => {
     render(<App />);
 
-    const title = screen.getByText('ParabelLab');
-    const subtitle = screen.getByText(/Interactive Parabola Learning Application/i);
-
-    expect(title).toBeInTheDocument();
-    expect(subtitle).toBeInTheDocument();
+    // Verify ExplorerPage components are present
+    expect(screen.getByTestId('explorer-page')).toBeInTheDocument();
+    expect(screen.getByTestId('parameter-controls')).toBeInTheDocument();
+    expect(screen.getByTestId('formula-display')).toBeInTheDocument();
   });
 });
