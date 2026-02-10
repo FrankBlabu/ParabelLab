@@ -46,3 +46,16 @@
 - A clean project structure with separate `src/` and `tests/` directories mirroring each other
   makes it easy to scale as components and utilities are added. Empty directories are fine
   during the scaffold phase and can be populated in subsequent feature implementation steps.
+
+## Issue 5 — Math Engine
+
+- JavaScript produces `-0` for expressions like `-2 * a * 0` or `-0 / (2 * a)`. The
+  `toEqual` matcher in Vitest distinguishes `-0` from `+0`, so conversion functions must
+  normalise negative zero (e.g. `result === 0 ? 0 : result`) to avoid spurious test failures.
+- Pure-function engine modules (`src/engine/`) with no React dependencies are straightforward
+  to test with plain Vitest — no jsdom environment or React Testing Library required.
+- Keeping types in `src/types/` with `readonly` fields enforces immutability at the type level
+  and prevents accidental mutation of shared parameter objects.
+- The `vitest` command runs in watch mode by default, which never exits. For CI and VSCode task
+  usage the `test` script must use `vitest run` (single-run mode) so the process terminates
+  after the suite completes.
