@@ -71,31 +71,35 @@ export default function Module2Page(): JSX.Element {
       className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8"
       data-testid="module2-page"
     >
-      <div className="max-w-5xl mx-auto">
+      <article className="max-w-5xl mx-auto">
         {/* Navigation */}
-        <Link
-          to="/"
-          className="inline-flex items-center text-primary-600 hover:text-primary-800 mb-4"
-          data-testid="back-link"
-        >
-          ← Zurueck zum Explorer
-        </Link>
+        <nav className="mb-4">
+          <Link
+            to="/"
+            className="inline-flex items-center text-primary-600 hover:text-primary-800 font-medium focus:outline-none focus:underline"
+            data-testid="back-link"
+          >
+            ← Zurück zum Explorer
+          </Link>
+        </nav>
 
         {/* Page Title */}
-        <h1
-          className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 text-center"
-          data-testid="module2-title"
-        >
-          Modul 2: Von der Normalform zur Scheitelpunktform
-        </h1>
+        <header className="mb-6">
+          <h1
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 text-center"
+            data-testid="module2-title"
+          >
+            Modul 2: Von der Normalform zur Scheitelpunktform
+          </h1>
 
-        {/* Module description */}
-        <p className="text-gray-600 text-center mb-6 max-w-2xl mx-auto">
-          Lerne Schritt fuer Schritt, wie du eine Parabel von der
-          Normalform f(x) = ax² + bx + c in die Scheitelpunktform
-          f(x) = a(x - d)² + e umwandelst, indem du die quadratische
-          Ergaenzung anwendest.
-        </p>
+          {/* Module description */}
+          <p className="text-sm md:text-base text-gray-600 text-center max-w-2xl mx-auto">
+            Lerne Schritt fuer Schritt, wie du eine Parabel von der
+            Normalform f(x) = ax² + bx + c in die Scheitelpunktform
+            f(x) = a(x - d)² + e umwandelst, indem du die quadratische
+            Ergaenzung anwendest.
+          </p>
+        </header>
 
         {/* Controls: Difficulty + New Exercise + Score */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
@@ -149,7 +153,7 @@ export default function Module2Page(): JSX.Element {
 
         {/* Exercise */}
         <ExerciseContainer exercise={exercise} onComplete={handleExerciseComplete} />
-      </div>
+      </article>
     </div>
   );
 }

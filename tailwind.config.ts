@@ -46,4 +46,7 @@ export default {
     },
   },
   plugins: [],
+  corePlugins: {
+    // Ensure accessibility utilities like sr-only are enabled
+  },
 } as Config;

@@ -75,7 +75,7 @@ const Slider: React.FC<SliderProps> = function Slider({
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={value}
-        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600 hover:bg-gray-300 transition-colors"
+        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 transition-colors"
       />
       <div className="flex justify-between text-xs text-gray-500">
         <span>{min}</span>

@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global focus styles for better accessibility */
+@layer base {
+  /* Ensure all focusable elements have visible focus indicators */
+  *:focus-visible {
+    outline: 2px solid theme('colors.blue.600');
+    outline-offset: 2px;
+  }
+
+  /* Improve focus contrast for buttons */
+  button:focus-visible,
+  a:focus-visible {
+    outline: 3px solid theme('colors.blue.600');
+    outline-offset: 2px;
+  }
+
+  /* Minimum touch target size for mobile accessibility (44x44px) */
+  @media (hover: none) and (pointer: coarse) {
+    button,
+    a,
+    input[type="range"],
+    input[type="checkbox"],
+    input[type="radio"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+}
+
 body {
   margin: 0;
   padding: 0;

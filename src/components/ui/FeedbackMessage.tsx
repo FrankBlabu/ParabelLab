@@ -53,6 +53,8 @@ const FeedbackMessage: React.FC<FeedbackMessageProps> = function FeedbackMessage
     <div
       className={`flex items-start gap-3 border-2 rounded-lg p-4 ${styles}`}
       role="alert"
+      aria-live="polite"
+      aria-atomic="true"
       data-testid="feedback-message"
     >
       <span className="text-xl" aria-hidden="true">

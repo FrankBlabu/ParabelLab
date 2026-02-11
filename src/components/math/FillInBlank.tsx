@@ -34,11 +34,11 @@ const FillInBlank: React.FC<FillInBlankProps> = function FillInBlank({
 
   let stateClasses = 'border-gray-300';
   if (state === 'correct') {
-    stateClasses = 'border-green-500 text-green-700';
+    stateClasses = 'border-green-600 bg-green-50 text-green-900';
   } else if (state === 'incorrect') {
-    stateClasses = 'border-red-500 text-red-700 animate-shake';
+    stateClasses = 'border-red-600 bg-red-50 text-red-900 animate-shake';
   } else if (state === 'hint-shown') {
-    stateClasses = 'border-yellow-500 text-yellow-700';
+    stateClasses = 'border-yellow-600 bg-yellow-50 text-yellow-900';
   }
 
   return (

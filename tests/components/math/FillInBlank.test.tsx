@@ -70,7 +70,7 @@ describe('FillInBlank', () => {
     );
 
     const input = screen.getByTestId('fill-blank-blank-1');
-    expect(input.className).toContain('border-green-500');
+    expect(input.className).toContain('border-green-600');
   });
 
   /*
@@ -88,6 +88,6 @@ describe('FillInBlank', () => {
     );
 
     const input = screen.getByTestId('fill-blank-blank-1');
-    expect(input.className).toContain('border-red-500');
+    expect(input.className).toContain('border-red-600');
   });
 });

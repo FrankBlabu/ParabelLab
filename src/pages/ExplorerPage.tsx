@@ -39,7 +39,7 @@ export default function ExplorerPage(): JSX.Element {
       className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8"
       data-testid="explorer-page"
     >
-      <div className="max-w-7xl mx-auto">
+      <article className="max-w-7xl mx-auto">
         {/* Page Title */}
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center">
           Parabel-Explorer
@@ -58,9 +58,9 @@ export default function ExplorerPage(): JSX.Element {
         )}
 
         {/* Main Content: Graph + Controls */}
-        <div className="flex flex-col lg:flex-row gap-6 mb-6">
+        <section className="flex flex-col lg:flex-row gap-6 mb-6">
           {/* Left/Top: Coordinate System (60% on large screens) */}
-          <div className="flex-1 lg:w-3/5 bg-white rounded-lg shadow-lg p-6">
+          <div className="flex-1 lg:w-3/5 bg-white rounded-lg shadow-lg p-4 md:p-6">
             {!showWarning ? (
               <CoordinateSystem
                 parabolaParams={vertexForm}
@@ -86,13 +86,13 @@ export default function ExplorerPage(): JSX.Element {
               onReset={reset}
             />
           </div>
-        </div>
+        </section>
 
         {/* Bottom: Formula Display (Full Width) */}
-        <div className="bg-white rounded-lg shadow-lg p-6">
+        <section className="bg-white rounded-lg shadow-lg p-4 md:p-6">
           <FormulaDisplay vertexForm={vertexForm} normalForm={normalForm} />
-        </div>
-      </div>
+        </section>
+      </article>
     </div>
   );
 }

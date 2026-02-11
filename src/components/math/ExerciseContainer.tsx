@@ -144,7 +144,9 @@ const ExerciseContainer: React.FC<ExerciseContainerProps> = function ExerciseCon
         <h2 className="text-2xl font-semibold text-gray-900">
           {exercise.title}
         </h2>
-        <p className="text-gray-600">{exercise.description}</p>
+        <p id="exercise-description" className="text-gray-600">
+          {exercise.description}
+        </p>
       </header>
 
       <StepIndicator
@@ -158,14 +160,17 @@ const ExerciseContainer: React.FC<ExerciseContainerProps> = function ExerciseCon
         }}
       />
 
-      <section className="rounded-lg border border-gray-200 p-4">
+      <section
+        className="rounded-lg border border-gray-200 p-4"
+        aria-describedby="exercise-description"
+      >
         <p className="text-sm uppercase text-gray-500 tracking-wide mb-2">
           Schritt {currentStepIndex + 1} von {exercise.steps.length}
         </p>
-        <h3 className="text-lg font-semibold text-gray-800 mb-2">
+        <h3 id="step-instruction" className="text-lg font-semibold text-gray-800 mb-2">
           {currentStep.instruction}
         </h3>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2" aria-labelledby="step-instruction">
           {renderTemplate()}
         </div>
         {showHelp && (
