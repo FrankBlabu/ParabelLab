@@ -10,6 +10,9 @@ import {
   generateNormalToVertexExercise,
   generateModule1Exercise,
   generateModule2Exercise,
+  generateExpandingExercise,
+  generateFactoringExercise,
+  generateRearrangingExercise,
 } from '../../src/engine/exercises';
 import { vertexToNormal, normalToVertex } from '../../src/engine/conversion';
 
@@ -338,5 +341,170 @@ describe('generateModule2Exercise', () => {
     expect(exercise.parabolaParams?.a).toBeDefined();
     expect(exercise.parabolaParams?.d).toBeDefined();
     expect(exercise.parabolaParams?.e).toBeDefined();
+  });
+});
+
+describe('generateExpandingExercise', () => {
+  /*
+   * Easy exercises should have simple distribution with one step.
+   */
+  it('generates easy exercises with simple distribution', () => {
+    const exercise = generateExpandingExercise('easy', 42);
+    expect(exercise.steps).toHaveLength(1);
+    expect(exercise.steps[0].blanks).toHaveLength(2);
+  });
+
+  /*
+   * Medium exercises should use binomial formulas.
+   */
+  it('generates medium exercises with binomial formulas', () => {
+    const exercise = generateExpandingExercise('medium', 42);
+    expect(exercise.steps).toHaveLength(1);
+    expect(exercise.title).toContain('Ausmultiplizieren');
+    expect(exercise.steps[0].blanks).toHaveLength(2);
+  });
+
+  /*
+   * Hard exercises should have nested brackets with two steps.
+   */
+  it('generates hard exercises with nested brackets', () => {
+    const exercise = generateExpandingExercise('hard', 42);
+    expect(exercise.steps).toHaveLength(2);
+    expect(exercise.steps[0].blanks).toHaveLength(2); // binomial step
+    expect(exercise.steps[1].blanks).toHaveLength(3); // distribution step
+  });
+
+  /*
+   * Each step should have instruction and explanation.
+   */
+  it('every step has instruction and explanation', () => {
+    const exercise = generateExpandingExercise('hard', 42);
+    for (const step of exercise.steps) {
+      expect(step.instruction).toBeTruthy();
+      expect(step.explanation).toBeTruthy();
+    }
+  });
+
+  /*
+   * Module 3 exercises should not include parabola parameters.
+   */
+  it('does not include parabola parameters', () => {
+    const exercise = generateExpandingExercise('easy', 42);
+    expect(exercise.parabolaParams).toBeUndefined();
+  });
+});
+
+describe('generateFactoringExercise', () => {
+  /*
+   * Easy exercises should factor out constants.
+   */
+  it('generates easy exercises with constant factoring', () => {
+    const exercise = generateFactoringExercise('easy', 42);
+    expect(exercise.steps).toHaveLength(1);
+    expect(exercise.steps[0].blanks).toHaveLength(2);
+    expect(exercise.title).toContain('Faktorisieren');
+  });
+
+  /*
+   * Medium exercises should factor out x from quadratics.
+   */
+  it('generates medium exercises with x factoring', () => {
+    const exercise = generateFactoringExercise('medium', 42);
+    expect(exercise.steps).toHaveLength(1);
+    expect(exercise.steps[0].blanks).toHaveLength(1);
+  });
+
+  /*
+   * Hard exercises should recognize binomial formulas.
+   */
+  it('generates hard exercises with binomial recognition', () => {
+    const exercise = generateFactoringExercise('hard', 42);
+    expect(exercise.steps).toHaveLength(1);
+    expect(exercise.steps[0].blanks).toHaveLength(1);
+    expect(exercise.description).toBeTruthy();
+  });
+
+  /*
+   * Each step should have instruction and explanation.
+   */
+  it('every step has instruction and explanation', () => {
+    const exercise = generateFactoringExercise('medium', 42);
+    for (const step of exercise.steps) {
+      expect(step.instruction).toBeTruthy();
+      expect(step.explanation).toBeTruthy();
+    }
+  });
+
+  /*
+   * Module 3 exercises should not include parabola parameters.
+   */
+  it('does not include parabola parameters', () => {
+    const exercise = generateFactoringExercise('medium', 42);
+    expect(exercise.parabolaParams).toBeUndefined();
+  });
+});
+
+describe('generateRearrangingExercise', () => {
+  /*
+   * Easy exercises should solve linear equations.
+   */
+  it('generates easy exercises with linear equations', () => {
+    const exercise = generateRearrangingExercise('easy', 42);
+    expect(exercise.steps).toHaveLength(1);
+    expect(exercise.steps[0].blanks).toHaveLength(1);
+    expect(exercise.title).toContain('Gleichungen umstellen');
+  });
+
+  /*
+   * Medium exercises should find zeros of quadratics.
+   */
+  it('generates medium exercises with quadratic zeros', () => {
+    const exercise = generateRearrangingExercise('medium', 42);
+    expect(exercise.steps).toHaveLength(1);
+    expect(exercise.steps[0].blanks).toHaveLength(2);
+  });
+
+  /*
+   * Hard exercises should simplify fractions.
+   */
+  it('generates hard exercises with fraction simplification', () => {
+    const exercise = generateRearrangingExercise('hard', 42);
+    expect(exercise.steps).toHaveLength(1);
+    expect(exercise.steps[0].blanks).toHaveLength(1);
+  });
+
+  /*
+   * Medium difficulty zeros should be symmetric (±√c).
+   */
+  it('medium exercises produce symmetric zeros', () => {
+    const exercise = generateRearrangingExercise('medium', 42);
+    const step = exercise.steps[0];
+    const x1 = step.blanks.find((b) => b.id === 'x1')?.correctAnswer;
+    const x2 = step.blanks.find((b) => b.id === 'x2')?.correctAnswer;
+
+    expect(x1).toBeDefined();
+    expect(x2).toBeDefined();
+    if (x1 !== undefined && x2 !== undefined) {
+      expect(x1).toBeCloseTo(-x2);
+    }
+  });
+
+  /*
+   * Each step should have instruction and explanation.
+   */
+  it('every step has instruction and explanation', () => {
+    const exercise = generateRearrangingExercise('hard', 42);
+    for (const step of exercise.steps) {
+      expect(step.instruction).toBeTruthy();
+      expect(step.explanation).toBeTruthy();
+    }
+  });
+
+  /*
+   * Module 3 exercises should not include parabola parameters.
+   */
+  it('does not include parabola parameters', () => {
+    const exercise = generateRearrangingExercise('easy', 42);
+    expect(exercise.parabolaParams).toBeUndefined();
   });
 });
