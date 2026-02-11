@@ -258,3 +258,47 @@
   exercises are correct on the first try (`correctFirstTry: true`) because the ExerciseContainer
   doesn't yet expose whether the student needed multiple attempts. A future enhancement would be to
   modify ExerciseContainer to track and report first-try success via the completion callback.
+
+## Issue 19 — Responsive Design & Accessibility
+
+- **`lang` attribute for internationalization**: Setting `<html lang="de">` improves screen reader
+  pronunciation and helps search engines identify the language. This is a basic WCAG requirement
+  for accessible web content.
+- **Skip-to-content link for keyboard navigation**: A skip link (`<a href="#main-content">`) at
+  the top of the page allows keyboard users to bypass repeated navigation and jump directly to
+  the main content. Style it with `sr-only focus:not-sr-only` so it's hidden until focused, then
+  appears visibly when tabbed to. This improves navigation efficiency for keyboard-only users.
+- **Semantic HTML structure**: Use semantic elements (`<main>`, `<nav>`, `<section>`, `<article>`,
+  `<header>`) instead of generic `<div>` containers. This provides better document structure for
+  screen readers and improves SEO. For example, wrap page content in `<article>` and navigation
+  controls in `<nav>`.
+- **ARIA attributes for dynamic content**: Add `aria-live="polite"` and `aria-atomic="true"` to
+  feedback messages so screen readers announce changes when they occur. Use `role="alert"` for
+  important messages. For progress indicators, use `role="progressbar"` with `aria-valuenow`,
+  `aria-valuemin`, and `aria-valuemax` to communicate progress state.
+- **Descriptive ARIA labels for graphs**: SVG graphs should have meaningful `aria-label` attributes
+  that describe what they represent. For example: `aria-label="Koordinatensystem mit Parabel.
+  Scheitelpunkt bei S(2|3). Parameter: a=1, d=2, e=3"`. This helps screen reader users understand
+  the visual content.
+- **Focus styles for accessibility**: Define global focus styles using `:focus-visible` to ensure
+  all interactive elements have clear focus indicators. Use `outline: 2px solid` with sufficient
+  contrast and `outline-offset: 2px` for visibility. For buttons and links, increase to `outline: 3px`
+  for even better visibility.
+- **Minimum touch target sizes**: On touch devices, ensure all interactive elements (buttons, links,
+  inputs) meet the WCAG 2.1 minimum size of 44×44 pixels. Use media queries with `(hover: none) and
+  (pointer: coarse)` to apply `min-height: 44px; min-width: 44px` only on touch devices.
+- **Color contrast for text**: Text colors on backgrounds must meet WCAG AA contrast ratios:
+  4.5:1 for normal text, 3:1 for large text. Use darker shades (e.g., `text-green-900` instead of
+  `text-green-700`) on white backgrounds. For inputs with state colors, add background tints
+  (e.g., `bg-green-50 text-green-900`) to improve readability while maintaining visual distinction.
+- **Responsive typography**: Use responsive text sizes with Tailwind's breakpoint utilities
+  (e.g., `text-2xl md:text-3xl lg:text-4xl`) to ensure headings are appropriately sized on all
+  devices. Start with smaller sizes for mobile and scale up for larger screens.
+- **aria-describedby for form instructions**: Link form controls to their instruction text using
+  `aria-describedby`. For example, in exercise containers, the exercise description can be
+  referenced by `id="exercise-description"` and linked with `aria-describedby="exercise-description"`
+  on the exercise section. This helps screen reader users understand the context.
+- **Duplicate closing tags debugging**: When multi-editing components and extracting common patterns,
+  carefully check for duplicate closing tags (e.g., `</div></div>` or `}}`). These cause parsing
+  errors that prevent the linter from running. Use proper indentation and code folding in the editor
+  to visually verify matching pairs.

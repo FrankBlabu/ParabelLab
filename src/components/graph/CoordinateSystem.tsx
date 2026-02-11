@@ -64,6 +64,9 @@ const CoordinateSystem: React.FC<CoordinateSystemProps> = function CoordinateSys
   const zeros = computeZeros(parabolaParams);
   const yIntercept = computeYIntercept(parabolaParams);
 
+  // Generate descriptive aria-label for the graph
+  const ariaLabel = `Koordinatensystem mit Parabel. Scheitelpunkt bei S(${vertex.x.toFixed(1)}|${vertex.y.toFixed(1)}). Parameter: a=${parabolaParams.a}, d=${parabolaParams.d}, e=${parabolaParams.e}`;
+
   return (
     <div
       data-testid="coordinate-system-container"
@@ -76,7 +79,7 @@ const CoordinateSystem: React.FC<CoordinateSystemProps> = function CoordinateSys
         width="100%"
         height="100%"
         role="img"
-        aria-label="Coordinate system with parabola"
+        aria-label={ariaLabel}
         data-testid="coordinate-system-svg"
         style={{ display: 'block' }}
       >

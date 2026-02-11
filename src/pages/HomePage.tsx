@@ -142,25 +142,25 @@ export default function HomePage(): JSX.Element {
   return (
     <div className="max-w-5xl mx-auto">
       {/* Welcome Section */}
-      <div className="text-center mb-12">
+      <section className="text-center mb-12">
         <img
           src="/assets/icon.png"
           alt="ParabelLab Logo"
           className="w-24 h-24 mx-auto mb-6"
         />
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Willkommen bei ParabelLab!
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
           ParabelLab ist deine interaktive Lernplattform für quadratische Funktionen.
           Erkunde Parabeln, übe Umformungen zwischen Scheitelpunkt- und Normalform,
           und trainiere grundlegende algebraische Rechenregeln.
         </p>
-      </div>
+      </section>
 
       {/* Progress Summary */}
       {progress.totalExercisesCompleted > 0 && (
-        <div className="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+        <section className="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">
             Dein Fortschritt
           </h2>
@@ -171,31 +171,34 @@ export default function HomePage(): JSX.Element {
           <button
             type="button"
             onClick={handleResetProgress}
-            className="mt-4 px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors text-sm"
+            className="mt-4 px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2"
+            aria-label="Gesamten Fortschritt zurücksetzen"
           >
             Fortschritt zurücksetzen
           </button>
-        </div>
+        </section>
       )}
 
       {/* Module Cards */}
-      <div className="space-y-4">
+      <section className="space-y-4">
         <h2 className="text-2xl font-semibold text-gray-900 mb-6">
           Wähle ein Modul:
         </h2>
-        {modules.map((module) => {
-          const moduleProgress = module.moduleId
-            ? getModuleProgress(progress, module.moduleId)
-            : undefined;
-          return (
-            <ModuleCard
-              key={module.path}
-              module={module}
-              exercisesCompleted={moduleProgress?.exercisesCompleted}
-            />
-          );
-        })}
-      </div>
+        <div className="space-y-4">
+          {modules.map((module) => {
+            const moduleProgress = module.moduleId
+              ? getModuleProgress(progress, module.moduleId)
+              : undefined;
+            return (
+              <ModuleCard
+                key={module.path}
+                module={module}
+                exercisesCompleted={moduleProgress?.exercisesCompleted}
+              />
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 }

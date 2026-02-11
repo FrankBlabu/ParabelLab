@@ -28,6 +28,14 @@ export default function AppShell(): JSX.Element {
 
   return (
     <div className="flex flex-col h-screen">
+      {/* Skip to Main Content Link - for keyboard navigation */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:font-semibold"
+      >
+        Zum Hauptinhalt springen
+      </a>
+
       {/* Header */}
       <header className="bg-blue-600 text-white shadow-md z-20">
         <div className="flex items-center px-4 py-3">
@@ -81,6 +89,7 @@ export default function AppShell(): JSX.Element {
 
         {/* Content Area */}
         <main
+          id="main-content"
           className="flex-1 overflow-auto bg-gray-50 p-6"
           data-testid="main-content"
         >

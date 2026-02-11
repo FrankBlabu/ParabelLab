@@ -22,7 +22,15 @@ const StepIndicator: React.FC<StepIndicatorProps> = function StepIndicator({
   const steps = Array.from({ length: totalSteps }, (_, index) => index);
 
   return (
-    <div className="flex items-center gap-2" data-testid="step-indicator">
+    <div
+      className="flex items-center gap-2"
+      role="progressbar"
+      aria-valuenow={currentStepIndex + 1}
+      aria-valuemin={1}
+      aria-valuemax={totalSteps}
+      aria-label={`Schritt ${currentStepIndex + 1} von ${totalSteps}`}
+      data-testid="step-indicator"
+    >
       {steps.map((index) => {
         const isCompleted = completedSteps.includes(index);
         const isCurrent = index === currentStepIndex;
