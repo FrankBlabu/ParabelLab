@@ -200,3 +200,29 @@
   every child interaction that affects that state must be wired up. Forgetting to pass `onComplete`
   to `ExerciseContainer` means the `solved` counter never increments, making the score display
   permanently show 0.
+
+## Issue 21 — App Shell & Navigation
+
+- **Layout routes with React Router**: Use a parent `<Route element={<AppShell />}>` with child routes
+  to share a common layout (header, sidebar, footer) across multiple pages. The `<Outlet />` component
+  in the layout renders the active child route's content. This pattern is cleaner than duplicating the
+  layout in every page component.
+- **Responsive sidebar with mobile menu**: Implement a mobile-friendly sidebar using:
+  - Tailwind's `md:` breakpoint utilities for responsive visibility (`-translate-x-full md:translate-x-0`)
+  - A hamburger button visible only on mobile (`md:hidden`)
+  - A semi-transparent overlay (`fixed inset-0 bg-black bg-opacity-50`) that closes the sidebar on click
+  - State management (`useState` for `isSidebarOpen`) to toggle sidebar visibility
+- **Test import paths must match directory depth**: Test files in `tests/layouts/` and `tests/pages/`
+  should use `../../src/` imports (two levels up), not `../../../src/` (three levels). The depth
+  depends on how many subdirectories down from the project root the test file is located. Use relative
+  imports consistently: `tests/foo/bar.test.tsx` → `../../src/foo/bar.tsx`.
+- **Avoid multiple match errors in tests**: When testing components that render the same text multiple
+  times (e.g., "Parabel-Explorer" in both sidebar navigation and main content), use more specific
+  queries. Instead of `getByText('Parabel-Explorer')` (which fails with multiple matches), use:
+  - A unique substring that only appears once: `getByText(/ParabelLab ist deine interaktive/)`
+  - Query scoping with `within()`: `within(screen.getByTestId('main-content')).getByText(...)`
+  - Different text patterns or test IDs to distinguish between instances
+- **NavLink active state with `end` prop**: When using React Router's `NavLink` for navigation, set
+  `end={true}` on the home route (`path="/"`) to prevent it from matching all child routes. Without
+  `end`, the home link would be highlighted as active on every page because `/` is a prefix of all
+  routes. The `end` prop ensures exact matching for that route only.
