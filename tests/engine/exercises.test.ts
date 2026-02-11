@@ -267,13 +267,11 @@ describe('generateModule2Exercise', () => {
   it('easy difficulty uses even b values', () => {
     for (let seed = 1; seed <= 20; seed++) {
       const exercise = generateModule2Exercise('easy', seed);
-      // Extract b from the description if present, or regenerate it
-      // For now, verify that step 1 hint contains the b value
+      // Step 1 blank "bHalf" is b/2; for even b this must be an integer
       const step1 = exercise.steps[0];
-      if (step1.id === 'module2-step1') {
-        // The hint contains "Teile X durch 2", where X is the even b
-        expect(step1.hint).toBeTruthy();
-      }
+      const bHalfBlank = step1.blanks.find((bl) => bl.id === 'bHalf');
+      expect(bHalfBlank).toBeTruthy();
+      expect(Number.isInteger(bHalfBlank!.correctAnswer)).toBe(true);
     }
   });
 

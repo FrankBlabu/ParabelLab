@@ -111,15 +111,12 @@ describe('Module2Page', () => {
     const user = userEvent.setup();
     renderModule2Page();
 
-    // Find first blank input (if present in step 1)
-    const blanks = screen.queryAllByRole('textbox');
-    if (blanks.length > 0) {
-      await user.type(blanks[0], '999');
+    const blanks = screen.getAllByRole('textbox');
+    await user.type(blanks[0], '999');
 
-      const checkButton = screen.getByTestId('exercise-check');
-      await user.click(checkButton);
+    const checkButton = screen.getByTestId('exercise-check');
+    await user.click(checkButton);
 
-      expect(screen.getByTestId('feedback-message')).toBeInTheDocument();
-    }
+    expect(screen.getByTestId('feedback-message')).toBeInTheDocument();
   });
 });

@@ -13,6 +13,7 @@ import type {
 } from '../types/exercise';
 import type { VertexFormParams } from '../types/parabola';
 import { vertexToNormal, normalToVertex } from './conversion';
+import { formatNormalForm } from '../utils/formatting';
 
 const DEFAULT_SEED = 1337;
 
@@ -446,7 +447,7 @@ export const generateModule2Exercise = (
         instruction: 'Berechne die Hälfte des Koeffizienten vor x.',
         explanation:
           'Um die quadratische Ergänzung durchzuführen, teile b durch 2.',
-        template: `b/2 = ${bAbs}/2 = {bHalf}`,
+        template: `b/2 = ${b}/2 = {bHalf}`,
         blanks: [
           {
             id: 'bHalf',
@@ -455,7 +456,7 @@ export const generateModule2Exercise = (
             label: 'b/2',
           },
         ],
-        hint: `Teile ${bAbs} durch 2.`,
+        hint: `Teile ${b} durch 2.`,
       }),
     );
 
@@ -609,7 +610,6 @@ export const generateModule2Exercise = (
     // Step 1: Calculate (b/(2a))
     const bOver2a = b / (2 * a);
     const bOver2aSq = bOver2a * bOver2a;
-    const bOver2aAbs = Math.abs(bOver2a);
 
     steps.push(
       createStep({
@@ -617,11 +617,11 @@ export const generateModule2Exercise = (
         instruction: 'Berechne den Ergänzungsterm (b/(2a)).',
         explanation:
           'Dies ist der Term, den wir innerhalb der Klammer hinzufügen und subtrahieren.',
-        template: `(b/(2a))² = {bOver2a}² = {bOver2aSq}`,
+        template: `b/(2a) = ${b}/(2·${a}) = {bOver2a}, (b/(2a))² = {bOver2aSq}`,
         blanks: [
           {
             id: 'bOver2a',
-            correctAnswer: bOver2aAbs,
+            correctAnswer: bOver2a,
             tolerance: 0.001,
             label: 'b/(2a)',
           },
@@ -632,7 +632,7 @@ export const generateModule2Exercise = (
             label: '(b/(2a))²',
           },
         ],
-        hint: `Berechne ${b}/(2·${a}) und quadriere das Ergebnis.`,
+        hint: `Berechne ${b}/(2·${a}) = ${bOver2a} und quadriere das Ergebnis.`,
       }),
     );
 
@@ -802,21 +802,12 @@ export const generateModule2Exercise = (
   return {
     id: `module2-normal-to-vertex-${difficulty}-${seed}`,
     title: 'Normalform in Scheitelpunktform umwandeln',
-    description: `Wandle f(x) = ${formatNormalForm(a, b, c)} in die Scheitelpunktform um.`,
+    description: `Wandle ${formatNormalForm({ a, b, c })} in die Scheitelpunktform um.`,
     steps,
     parabolaParams: vertexParams,
   };
 };
 
-const formatNormalForm = (a: number, b: number, c: number): string => {
-  const aStr = a === 1 ? '' : a === -1 ? '-' : `${a}`;
-  const bSign = b >= 0 ? '+' : '-';
-  const bAbs = Math.abs(b);
-  const bStr = bAbs === 1 ? 'x' : `${bAbs}x`;
-  const cSign = c >= 0 ? '+' : '-';
-  const cAbs = Math.abs(c);
-  return `${aStr}x² ${bSign} ${bStr} ${cSign} ${cAbs}`;
-};
 
 export const generateTermTransformationExercise = (
   type: TransformationType,
