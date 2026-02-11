@@ -123,16 +123,21 @@ describe('generateModule1Exercise', () => {
 
     const expected = vertexToNormal(params);
     const finalA = findBlankAnswer(exercise.steps, 'finalA');
-    const finalBabs = findBlankAnswer(exercise.steps, 'finalBabs');
     const finalCabs = findBlankAnswer(exercise.steps, 'finalCabs');
 
     expect(finalA).toBeCloseTo(expected.a);
-    expect(finalBabs).toBeCloseTo(Math.abs(expected.b));
     expect(finalCabs).toBeCloseTo(Math.abs(expected.c));
+
+    // The |b| blank only exists when d ≠ 0; avoid assuming it is always present.
+    if (params.d !== 0) {
+      const finalBabs = findBlankAnswer(exercise.steps, 'finalBabs');
+      expect(finalBabs).toBeCloseTo(Math.abs(expected.b));
+    }
   });
 
   /*
    * Step 1 binomial blanks should be correct: 2|d| and d².
+   * These blanks only exist when d ≠ 0.
    */
   it('produces correct binomial expansion blanks', () => {
     const exercise = generateModule1Exercise('medium', 42);
@@ -142,11 +147,14 @@ describe('generateModule1Exercise', () => {
       throw new Error('Missing parabola parameters for exercise');
     }
 
-    const twoD = findBlankAnswer(exercise.steps, 'twoD');
-    const dSq = findBlankAnswer(exercise.steps, 'dSq');
+    // Only check binomial expansion blanks when d ≠ 0
+    if (params.d !== 0) {
+      const twoD = findBlankAnswer(exercise.steps, 'twoD');
+      const dSq = findBlankAnswer(exercise.steps, 'dSq');
 
-    expect(twoD).toBeCloseTo(Math.abs(2 * params.d));
-    expect(dSq).toBeCloseTo(params.d * params.d);
+      expect(twoD).toBeCloseTo(Math.abs(2 * params.d));
+      expect(dSq).toBeCloseTo(params.d * params.d);
+    }
   });
 
   /*

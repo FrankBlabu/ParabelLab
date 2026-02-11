@@ -15,10 +15,12 @@ import CoordinateSystem from '../graph/CoordinateSystem';
 
 export interface ExerciseContainerProps {
   readonly exercise: Exercise;
+  readonly onComplete?: () => void;
 }
 
 const ExerciseContainer: React.FC<ExerciseContainerProps> = function ExerciseContainer({
   exercise,
+  onComplete,
 }: ExerciseContainerProps) {
   const {
     currentStepIndex,
@@ -81,6 +83,10 @@ const ExerciseContainer: React.FC<ExerciseContainerProps> = function ExerciseCon
   const handleNext = (): void => {
     if (!isCurrentStepComplete) {
       return;
+    }
+    if (currentStepIndex === exercise.steps.length - 1) {
+      // Exercise is complete, call the completion callback
+      onComplete?.();
     }
     nextStep();
   };

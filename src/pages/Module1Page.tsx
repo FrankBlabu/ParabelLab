@@ -51,6 +51,10 @@ export default function Module1Page(): JSX.Element {
     setTotal((prev) => prev + 1);
   }, []);
 
+  const handleExerciseComplete = useCallback((): void => {
+    setSolved((prev) => prev + 1);
+  }, []);
+
   const handleDifficultyChange = useCallback((newDifficulty: Difficulty): void => {
     setDifficulty(newDifficulty);
     setSeed((prev) => prev + 1);
@@ -140,7 +144,7 @@ export default function Module1Page(): JSX.Element {
         </div>
 
         {/* Exercise */}
-        <ExerciseContainer exercise={exercise} />
+        <ExerciseContainer exercise={exercise} onComplete={handleExerciseComplete} />
       </div>
     </div>
   );

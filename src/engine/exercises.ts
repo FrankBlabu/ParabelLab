@@ -283,7 +283,7 @@ export const generateModule1Exercise = (
         instruction: 'Multipliziere den Faktor a aus.',
         explanation:
           'Da a = 1 ist, aendert sich beim Ausmultiplizieren nichts.',
-        template: `f(x) = x² ${d > 0 ? '-' : d < 0 ? '+' : ''} ${d !== 0 ? `${twiceAbsD}x + ${dSquared}` : ''}`,
+        template: d !== 0 ? `f(x) = x² ${d > 0 ? '-' : '+'} ${twiceAbsD}x + ${dSquared}` : 'f(x) = x²',
         blanks: [],
         hint: 'Da a = 1 ist, bleiben die Terme unveraendert.',
       }),
@@ -305,11 +305,16 @@ export const generateModule1Exercise = (
             { id: 'ad2', correctAnswer: aTimesD2, label: 'ad²' },
           ];
 
+    const explanationText =
+      d === 0
+        ? `Multipliziere a = ${a} mit jedem Summanden: ${a} · x² und ${a} · ${dSquared}.`
+        : `Multipliziere a = ${a} mit jedem Summanden: ${a} · x², ${a} · ${twiceAbsD}x und ${a} · ${dSquared}.`;
+
     steps.push(
       createStep({
         id: 'module1-step3',
         instruction: 'Multipliziere den Faktor a mit jedem Term in der Klammer.',
-        explanation: `Multipliziere a = ${a} mit jedem Summanden: ${a} · x², ${a} · ${twiceAbsD}x und ${a} · ${dSquared}.`,
+        explanation: explanationText,
         template: distributeTemplate,
         blanks: distributeBlanks,
         hint: `Multipliziere ${a} mit jedem Term einzeln.`,
