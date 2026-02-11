@@ -134,3 +134,30 @@
   needs to track progress (solved exercise count), add an optional callback prop to the
   child component (`ExerciseContainer`). Call it at the right lifecycle moment (after the
   final step is completed) to trigger state updates in the parent.
+
+## Issue 10 — Module 2: Normal Form to Vertex Form
+
+- **Two-path exercise architecture:** When an exercise has fundamentally different step counts
+  based on a parameter (like completing the square with `a=1` vs `a≠1`), branch at the top
+  level with `if (a === 1) { ... 6 steps ... } else { ... 7 steps ... }` rather than trying to
+  conditionally render individual steps. This keeps each path clean and testable.
+- **Handling b=0 edge case:** While completing the square normally requires adding and subtracting
+  `(b/(2a))²`, when `b=0` the completing term is 0 and the process trivializes. Generate exercises
+  that avoid `b=0` entirely (check and reassign if zero) rather than adding special-case rendering
+  logic—it's simpler to just exclude the edge case than to handle it in the UI.
+- **Tolerance for fractional answers:** Steps involving `b/2`, `b/(2a)`, or their squares produce
+  fractional results (e.g., `1/3`). Use `tolerance: 0.001` on blanks for these values to allow
+  students to round to reasonable decimal places without failing. Test assertions also need
+  `toBeCloseTo(expected, 2)` rather than exact equality.
+- **Sign-aware formatting helpers:** The `formatNormalForm(a, b, c)` helper centralizes the logic
+  for displaying normal form equations with correct sign handling. Without this helper, sign logic
+  gets scattered across templates and explanations, making them harder to maintain and test.
+  A single formatting function ensures consistency.
+- **Generating parameters by difficulty:** The parameter generation strategy should be explicit:
+  Easy uses integers with even `b` to avoid fractions, Medium uses integers with any `b`, Hard uses
+  non-unit `a` to force factoring. Document these rules in comments so future modules can follow
+  the same progression pattern.
+- **Test correctness via conversion functions:** Module 2 exercises can be validated by checking
+  that the final vertex coordinates (stored in `exercise.parabolaParams`) match the expected
+  output of `normalToVertex(...)`. This ensures round-trip correctness without duplicating the
+  mathematical logic in tests.

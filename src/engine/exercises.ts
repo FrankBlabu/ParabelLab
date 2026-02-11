@@ -384,6 +384,440 @@ export const generateModule1Exercise = (
   };
 };
 
+export const generateModule2Exercise = (
+  difficulty: Difficulty,
+  seed: number = DEFAULT_SEED,
+): Exercise => {
+  const random = createSeededRandom(seed);
+
+  // Generate normal form parameters based on difficulty
+  let a: number;
+  let b: number;
+  let c: number;
+
+  if (difficulty === 'easy') {
+    // a = 1, even b (no fractions in b/2)
+    a = 1;
+    b = randomInt(random, -4, 4) * 2;
+    if (b === 0) b = 2; // Avoid trivial case
+    c = randomInt(random, -5, 5);
+  } else if (difficulty === 'medium') {
+    // a = 1, any b (allows fractions)
+    a = 1;
+    b = randomInt(random, -7, 7);
+    if (b === 0) b = randomInt(random, -3, 3);
+    if (b === 0) b = 1; // Avoid b = 0
+    c = randomInt(random, -8, 8);
+  } else {
+    // Hard: a ≠ 1, requires factoring
+    a = pickFromArray(random, [-2, -1, 2, 3] as const);
+    b = randomInt(random, -8, 8);
+    if (b === 0) b = randomInt(random, -4, 4);
+    if (b === 0) b = 1; // Avoid b = 0
+    c = randomInt(random, -8, 8);
+  }
+
+  // Compute correct answers using conversion function
+  const vertexParams = normalToVertex({ a, b, c });
+  const { d, e } = vertexParams;
+
+  const steps: ExerciseStep[] = [];
+
+  // Helper function to determine sign character
+  const getSignChar = (value: number): string => (value >= 0 ? '+' : '-');
+
+  if (a === 1) {
+    // 6-step simplified path for a = 1
+    const bHalf = b / 2;
+    const bHalfSq = bHalf * bHalf;
+    const bSign = getSignChar(b);
+    const bAbs = Math.abs(b);
+    const binomSign = getSignChar(bHalf);
+    const binomAbs = Math.abs(bHalf);
+    const cSign = getSignChar(c);
+    const cAbs = Math.abs(c);
+    const eSign = getSignChar(e);
+    const eAbs = Math.abs(e);
+
+    // Step 1: Calculate b/2
+    steps.push(
+      createStep({
+        id: 'module2-step1',
+        instruction: 'Berechne die Hälfte des Koeffizienten vor x.',
+        explanation:
+          'Um die quadratische Ergänzung durchzuführen, teile b durch 2.',
+        template: `b/2 = ${bAbs}/2 = {bHalf}`,
+        blanks: [
+          {
+            id: 'bHalf',
+            correctAnswer: bHalf,
+            tolerance: 0.001,
+            label: 'b/2',
+          },
+        ],
+        hint: `Teile ${bAbs} durch 2.`,
+      }),
+    );
+
+    // Step 2: Square (b/2)
+    steps.push(
+      createStep({
+        id: 'module2-step2',
+        instruction: 'Berechne das Quadrat von b/2.',
+        explanation:
+          'Quadriere das Ergebnis aus Schritt 1. Dies ist der Ergänzungsterm.',
+        template: `(b/2)² = (${binomAbs})² = {bHalfSq}`,
+        blanks: [
+          {
+            id: 'bHalfSq',
+            correctAnswer: bHalfSq,
+            tolerance: 0.001,
+            label: '(b/2)²',
+          },
+        ],
+        hint: `Berechne ${binomAbs} · ${binomAbs}.`,
+      }),
+    );
+
+    // Step 3: Add and subtract
+    steps.push(
+      createStep({
+        id: 'module2-step3',
+        instruction: 'Ergänze und subtrahiere den Term gleichzeitig.',
+        explanation:
+          'Füge (b/2)² hinzu und subtrahiere es wieder, um den Wert der Funktion nicht zu ändern.',
+        template: `f(x) = x² ${bSign} ${bAbs}x + {add} - {sub} ${cSign} ${cAbs}`,
+        blanks: [
+          {
+            id: 'add',
+            correctAnswer: bHalfSq,
+            tolerance: 0.001,
+            label: 'Ergänzung',
+          },
+          {
+            id: 'sub',
+            correctAnswer: bHalfSq,
+            tolerance: 0.001,
+            label: 'Subtraktion',
+          },
+        ],
+        hint: `Setze ${bHalfSq} sowohl für die Addition als auch die Subtraktion ein.`,
+      }),
+    );
+
+    // Step 4: Form binomial
+    steps.push(
+      createStep({
+        id: 'module2-step4',
+        instruction: 'Erkenne die binomische Formel und forme das Binom.',
+        explanation: 'Die ersten drei Terme bilden ein vollständiges Quadrat.',
+        template: `f(x) = (x ${binomSign} {binomValue})² - {subValue} ${cSign} ${cAbs}`,
+        blanks: [
+          {
+            id: 'binomValue',
+            correctAnswer: binomAbs,
+            tolerance: 0.001,
+            label: 'Binom-Wert',
+          },
+          {
+            id: 'subValue',
+            correctAnswer: bHalfSq,
+            tolerance: 0.001,
+            label: 'subtrahierter Wert',
+          },
+        ],
+        hint: `x² ${bSign} ${bAbs}x + ${bHalfSq} = (x ${binomSign} ${binomAbs})²`,
+      }),
+    );
+
+    // Step 5: Combine constants
+    steps.push(
+      createStep({
+        id: 'module2-step5',
+        instruction: 'Fasse die konstanten Terme zusammen.',
+        explanation: `Berechne -${bHalfSq} ${cSign} ${cAbs} = ${e}.`,
+        template: `f(x) = (x ${binomSign} ${binomAbs})² ${eSign} {eValue}`,
+        blanks: [
+          {
+            id: 'eValue',
+            correctAnswer: eAbs,
+            tolerance: 0.001,
+            label: 'e',
+          },
+        ],
+        hint: `Berechne ${-bHalfSq} ${cSign} ${cAbs}.`,
+      }),
+    );
+
+    // Step 6: Read vertex
+    steps.push(
+      createStep({
+        id: 'module2-step6',
+        instruction: 'Lies den Scheitelpunkt S(d|e) ab.',
+        explanation: `Aus f(x) = (x - d)² + e folgt: d = ${d}, e = ${e}.`,
+        template: `Scheitelpunkt: S({d} | {e})`,
+        blanks: [
+          {
+            id: 'd',
+            correctAnswer: d,
+            tolerance: 0.001,
+            label: 'd',
+          },
+          {
+            id: 'e',
+            correctAnswer: e,
+            tolerance: 0.001,
+            label: 'e',
+          },
+        ],
+        hint: `Achte auf das Vorzeichen: (x ${binomSign} ${binomAbs}) bedeutet d = ${d}.`,
+      }),
+    );
+  } else {
+    // 7-step full path for a ≠ 1
+    const bOverA = b / a;
+    const bOverASign = getSignChar(bOverA);
+    const bOverAAbs = Math.abs(bOverA);
+    const cSign = getSignChar(c);
+    const cAbs = Math.abs(c);
+
+    // Step 0: Factor out a
+    steps.push(
+      createStep({
+        id: 'module2-step0',
+        instruction: 'Klammere den Faktor a aus den ersten beiden Termen aus.',
+        explanation:
+          'Um die quadratische Ergänzung durchzuführen, muss der Koeffizient vor x² gleich 1 sein.',
+        template: `f(x) = {aFactor}(x² ${bOverASign} {bOverA}x) ${cSign} ${cAbs}`,
+        blanks: [
+          {
+            id: 'aFactor',
+            correctAnswer: a,
+            label: 'a',
+          },
+          {
+            id: 'bOverA',
+            correctAnswer: bOverAAbs,
+            tolerance: 0.001,
+            label: 'b/a',
+          },
+        ],
+        hint: `Klammere ${a} aus ${a}x² ${getSignChar(b)} ${Math.abs(b)}x aus.`,
+      }),
+    );
+
+    // Step 1: Calculate (b/(2a))
+    const bOver2a = b / (2 * a);
+    const bOver2aSq = bOver2a * bOver2a;
+    const bOver2aAbs = Math.abs(bOver2a);
+
+    steps.push(
+      createStep({
+        id: 'module2-step1',
+        instruction: 'Berechne den Ergänzungsterm (b/(2a)).',
+        explanation:
+          'Dies ist der Term, den wir innerhalb der Klammer hinzufügen und subtrahieren.',
+        template: `(b/(2a))² = {bOver2a}² = {bOver2aSq}`,
+        blanks: [
+          {
+            id: 'bOver2a',
+            correctAnswer: bOver2aAbs,
+            tolerance: 0.001,
+            label: 'b/(2a)',
+          },
+          {
+            id: 'bOver2aSq',
+            correctAnswer: bOver2aSq,
+            tolerance: 0.001,
+            label: '(b/(2a))²',
+          },
+        ],
+        hint: `Berechne ${b}/(2·${a}) und quadriere das Ergebnis.`,
+      }),
+    );
+
+    // Step 2: Add and subtract inside parentheses
+    steps.push(
+      createStep({
+        id: 'module2-step2',
+        instruction:
+          'Ergänze und subtrahiere den Term innerhalb der Klammer.',
+        explanation: `Füge ${bOver2aSq} hinzu und subtrahiere es wieder.`,
+        template: `f(x) = {aFactor}(x² ${bOverASign} {bOverA}x + {add} - {sub}) ${cSign} ${cAbs}`,
+        blanks: [
+          {
+            id: 'aFactor',
+            correctAnswer: a,
+            label: 'a',
+          },
+          {
+            id: 'bOverA',
+            correctAnswer: bOverAAbs,
+            tolerance: 0.001,
+            label: 'b/a',
+          },
+          {
+            id: 'add',
+            correctAnswer: bOver2aSq,
+            tolerance: 0.001,
+            label: 'Ergänzung',
+          },
+          {
+            id: 'sub',
+            correctAnswer: bOver2aSq,
+            tolerance: 0.001,
+            label: 'Subtraktion',
+          },
+        ],
+        hint: `Setze ${bOver2aSq} sowohl für die Addition als auch die Subtraktion ein.`,
+      }),
+    );
+
+    // Step 3: Form the binomial
+    const binomSign = getSignChar(bOver2a);
+    const binomAbs = Math.abs(bOver2a);
+
+    steps.push(
+      createStep({
+        id: 'module2-step3',
+        instruction: 'Forme die binomische Formel.',
+        explanation: `Die ersten drei Terme bilden (x ${binomSign} ${binomAbs})².`,
+        template: `f(x) = {aFactor}((x ${binomSign} {binomTerm})² - {bOver2aSq}) ${cSign} ${cAbs}`,
+        blanks: [
+          {
+            id: 'aFactor',
+            correctAnswer: a,
+            label: 'a',
+          },
+          {
+            id: 'binomTerm',
+            correctAnswer: binomAbs,
+            tolerance: 0.001,
+            label: 'Binom-Term',
+          },
+          {
+            id: 'bOver2aSq',
+            correctAnswer: bOver2aSq,
+            tolerance: 0.001,
+            label: '(b/(2a))²',
+          },
+        ],
+        hint: `x² ${bOverASign} ${bOverAAbs}x + ${bOver2aSq} = (x ${binomSign} ${binomAbs})²`,
+      }),
+    );
+
+    // Step 4: Distribute a to subtracted term
+    const aTimesBOver2aSq = a * bOver2aSq;
+    const aTimesBOver2aSqAbs = Math.abs(aTimesBOver2aSq);
+    const aTimesBOver2aSqSign = getSignChar(-aTimesBOver2aSq);
+
+    steps.push(
+      createStep({
+        id: 'module2-step4',
+        instruction: 'Multipliziere a mit dem subtrahierten Term aus.',
+        explanation: `Verteile ${a} auf den Term -${bOver2aSq}.`,
+        template: `f(x) = {aFactor}(x ${binomSign} {binomTerm})² ${aTimesBOver2aSqSign} {aTimes} ${cSign} ${cAbs}`,
+        blanks: [
+          {
+            id: 'aFactor',
+            correctAnswer: a,
+            label: 'a',
+          },
+          {
+            id: 'binomTerm',
+            correctAnswer: binomAbs,
+            tolerance: 0.001,
+            label: 'Binom-Term',
+          },
+          {
+            id: 'aTimes',
+            correctAnswer: aTimesBOver2aSqAbs,
+            tolerance: 0.001,
+            label: 'a·(b/(2a))²',
+          },
+        ],
+        hint: `Berechne ${a} · ${bOver2aSq}.`,
+      }),
+    );
+
+    // Step 5: Combine constants
+    const eSign = getSignChar(e);
+    const eAbs = Math.abs(e);
+
+    steps.push(
+      createStep({
+        id: 'module2-step5',
+        instruction: 'Fasse die konstanten Terme zusammen.',
+        explanation: `Berechne ${-aTimesBOver2aSq} ${cSign} ${cAbs} = ${e}.`,
+        template: `f(x) = {aFactor}(x ${binomSign} {binomTerm})² ${eSign} {eValue}`,
+        blanks: [
+          {
+            id: 'aFactor',
+            correctAnswer: a,
+            label: 'a',
+          },
+          {
+            id: 'binomTerm',
+            correctAnswer: binomAbs,
+            tolerance: 0.001,
+            label: 'Binom-Term',
+          },
+          {
+            id: 'eValue',
+            correctAnswer: eAbs,
+            tolerance: 0.001,
+            label: 'e',
+          },
+        ],
+        hint: `Berechne ${-aTimesBOver2aSq} ${cSign} ${cAbs}.`,
+      }),
+    );
+
+    // Step 6: Read vertex
+    steps.push(
+      createStep({
+        id: 'module2-step6',
+        instruction: 'Lies den Scheitelpunkt ab.',
+        explanation: `Aus f(x) = a(x - d)² + e folgt: d = ${d}, e = ${e}.`,
+        template: `Scheitelpunkt: S({d} | {e})`,
+        blanks: [
+          {
+            id: 'd',
+            correctAnswer: d,
+            tolerance: 0.001,
+            label: 'd',
+          },
+          {
+            id: 'e',
+            correctAnswer: e,
+            tolerance: 0.001,
+            label: 'e',
+          },
+        ],
+        hint: `Aus f(x) = ${a}(x ${binomSign} ${binomAbs})² ${eSign} ${eAbs} folgt d = ${d}, e = ${e}.`,
+      }),
+    );
+  }
+
+  return {
+    id: `module2-normal-to-vertex-${difficulty}-${seed}`,
+    title: 'Normalform in Scheitelpunktform umwandeln',
+    description: `Wandle f(x) = ${formatNormalForm(a, b, c)} in die Scheitelpunktform um.`,
+    steps,
+    parabolaParams: vertexParams,
+  };
+};
+
+const formatNormalForm = (a: number, b: number, c: number): string => {
+  const aStr = a === 1 ? '' : a === -1 ? '-' : `${a}`;
+  const bSign = b >= 0 ? '+' : '-';
+  const bAbs = Math.abs(b);
+  const bStr = bAbs === 1 ? 'x' : `${bAbs}x`;
+  const cSign = c >= 0 ? '+' : '-';
+  const cAbs = Math.abs(c);
+  return `${aStr}x² ${bSign} ${bStr} ${cSign} ${cAbs}`;
+};
+
 export const generateTermTransformationExercise = (
   type: TransformationType,
   seed: number = DEFAULT_SEED,
