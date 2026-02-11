@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
+import { ProgressProvider } from '../../src/context/ProgressContext';
 import App from '../../src/App';
 
 /**
@@ -11,7 +12,11 @@ import App from '../../src/App';
  */
 describe('App Component', () => {
   it('should render without crashing', () => {
-    render(<App />);
+    render(
+      <ProgressProvider>
+        <App />
+      </ProgressProvider>
+    );
 
     // Verify that the AppShell and HomePage are present
     const heading = screen.getByText('Willkommen bei ParabelLab!');
@@ -19,7 +24,11 @@ describe('App Component', () => {
   });
 
   it('should display the HomePage by default with AppShell', () => {
-    render(<App />);
+    render(
+      <ProgressProvider>
+        <App />
+      </ProgressProvider>
+    );
 
     // Verify AppShell components are present
     expect(screen.getByText('ParabelLab')).toBeInTheDocument();

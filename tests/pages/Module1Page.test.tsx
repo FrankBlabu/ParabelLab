@@ -12,14 +12,15 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
-import Module1Page from '../../src/pages/Module1Page';
+import { BrowserRouter } from 'react-router-dom';import { ProgressProvider } from '../../src/context/ProgressContext';import Module1Page from '../../src/pages/Module1Page';
 
 function renderModule1Page() {
   return render(
-    <BrowserRouter>
-      <Module1Page />
-    </BrowserRouter>,
+    <ProgressProvider>
+      <BrowserRouter>
+        <Module1Page />
+      </BrowserRouter>
+    </ProgressProvider>,
   );
 }
 

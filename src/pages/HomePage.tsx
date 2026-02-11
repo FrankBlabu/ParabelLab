@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
 import type { JSX } from 'react';
+import { useProgress, getModuleProgress } from '../hooks/useProgress';
 
 /**
  * Module card configuration
  */
 interface ModuleCardData {
+  /** Module ID for progress tracking */
+  readonly moduleId: string | null;
   /** Route path */
   readonly path: string;
   /** Module title */
@@ -19,6 +22,7 @@ interface ModuleCardData {
 
 const modules: readonly ModuleCardData[] = [
   {
+    moduleId: null,
     path: '/explorer',
     title: 'Parabel-Explorer',
     description:
@@ -27,6 +31,7 @@ const modules: readonly ModuleCardData[] = [
     icon: '📈',
   },
   {
+    moduleId: 'module1',
     path: '/modul/1',
     title: 'Scheitelpunkt → Normalform',
     description:
@@ -35,6 +40,7 @@ const modules: readonly ModuleCardData[] = [
     icon: '📝',
   },
   {
+    moduleId: 'module2',
     path: '/modul/2',
     title: 'Normal → Scheitelpunkt',
     description:
@@ -43,6 +49,7 @@ const modules: readonly ModuleCardData[] = [
     icon: '📝',
   },
   {
+    moduleId: 'module3',
     path: '/modul/3',
     title: 'Termumformungen',
     description:
@@ -60,8 +67,15 @@ const modules: readonly ModuleCardData[] = [
  * - Title
  * - Description
  * - Difficulty indicator
+ * - Progress bar (if the module has progress)
  */
-function ModuleCard({ module }: { readonly module: ModuleCardData }): JSX.Element {
+function ModuleCard({
+  module,
+  exercisesCompleted,
+}: {
+  readonly module: ModuleCardData;
+  readonly exercisesCompleted?: number;
+}): JSX.Element {
   const difficultyColors = {
     Einfach: 'bg-green-100 text-green-800',
     Mittel: 'bg-amber-100 text-amber-800',
@@ -80,13 +94,20 @@ function ModuleCard({ module }: { readonly module: ModuleCardData }): JSX.Elemen
         <div className="flex-1">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">{module.title}</h2>
           <p className="text-gray-600 mb-3">{module.description}</p>
-          <span
-            className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-              difficultyColors[module.difficulty]
-            }`}
-          >
-            {module.difficulty}
-          </span>
+          <div className="flex items-center gap-3">
+            <span
+              className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                difficultyColors[module.difficulty]
+              }`}
+            >
+              {module.difficulty}
+            </span>
+            {exercisesCompleted !== undefined && exercisesCompleted > 0 && (
+              <span className="text-sm text-gray-600">
+                {exercisesCompleted} Aufgaben gelöst
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </Link>
@@ -100,10 +121,24 @@ function ModuleCard({ module }: { readonly module: ModuleCardData }): JSX.Elemen
  * Displays:
  * - Welcome heading
  * - Brief description
- * - Module cards linking to all available modules
+ * - Progress summary (total exercises completed)
+ * - Module cards linking to all available modules with progress indicators
  * - App icon
+ * - Reset progress button
  */
 export default function HomePage(): JSX.Element {
+  const { progress, resetProgress } = useProgress();
+
+  const handleResetProgress = (): void => {
+    if (
+      window.confirm(
+        'Möchtest du wirklich deinen gesamten Fortschritt zurücksetzen? Diese Aktion kann nicht rückgängig gemacht werden.'
+      )
+    ) {
+      resetProgress();
+    }
+  };
+
   return (
     <div className="max-w-5xl mx-auto">
       {/* Welcome Section */}
@@ -123,14 +158,43 @@ export default function HomePage(): JSX.Element {
         </p>
       </div>
 
+      {/* Progress Summary */}
+      {progress.totalExercisesCompleted > 0 && (
+        <div className="bg-primary-50 border border-primary-200 rounded-lg p-6 mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+            Dein Fortschritt
+          </h2>
+          <p className="text-lg text-gray-700">
+            Du hast bisher <strong>{progress.totalExercisesCompleted}</strong>{' '}
+            {progress.totalExercisesCompleted === 1 ? 'Aufgabe' : 'Aufgaben'} gelöst!
+          </p>
+          <button
+            type="button"
+            onClick={handleResetProgress}
+            className="mt-4 px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors text-sm"
+          >
+            Fortschritt zurücksetzen
+          </button>
+        </div>
+      )}
+
       {/* Module Cards */}
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold text-gray-900 mb-6">
           Wähle ein Modul:
         </h2>
-        {modules.map((module) => (
-          <ModuleCard key={module.path} module={module} />
-        ))}
+        {modules.map((module) => {
+          const moduleProgress = module.moduleId
+            ? getModuleProgress(progress, module.moduleId)
+            : undefined;
+          return (
+            <ModuleCard
+              key={module.path}
+              module={module}
+              exercisesCompleted={moduleProgress?.exercisesCompleted}
+            />
+          );
+        })}
       </div>
     </div>
   );

@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 import type { Difficulty } from '../types/exercise';
 import { generateModule1Exercise } from '../engine/exercises';
 import ExerciseContainer from '../components/math/ExerciseContainer';
+import { useProgress } from '../hooks/useProgress';
 
 const DIFFICULTY_LABELS: Record<Difficulty, string> = {
   easy: 'Einfach',
@@ -36,6 +37,7 @@ const DIFFICULTY_DESCRIPTIONS: Record<Difficulty, string> = {
 };
 
 export default function Module1Page(): JSX.Element {
+  const { recordExerciseCompletion } = useProgress();
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [seed, setSeed] = useState(1);
   const [solved, setSolved] = useState(0);
@@ -53,7 +55,9 @@ export default function Module1Page(): JSX.Element {
 
   const handleExerciseComplete = useCallback((): void => {
     setSolved((prev) => prev + 1);
-  }, []);
+    // Track in persistent progress (assume first-try correct for now)
+    recordExerciseCompletion('module1', difficulty, true);
+  }, [difficulty, recordExerciseCompletion]);
 
   const handleDifficultyChange = useCallback((newDifficulty: Difficulty): void => {
     setDifficulty(newDifficulty);
