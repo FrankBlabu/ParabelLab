@@ -1,6 +1,6 @@
 {
   "name": "ParabelLab Development",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:20-alpine",
   "features": {
     "ghcr.io/devcontainers/features/git:1": {}
   },
