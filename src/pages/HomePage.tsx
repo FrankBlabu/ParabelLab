@@ -140,7 +140,7 @@ export default function HomePage(): JSX.Element {
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto page-transition">
       {/* Welcome Section */}
       <section className="text-center mb-12">
         <img
