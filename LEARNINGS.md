@@ -226,3 +226,35 @@
   `end={true}` on the home route (`path="/"`) to prevent it from matching all child routes. Without
   `end`, the home link would be highlighted as active on every page because `/` is a prefix of all
   routes. The `end` prop ensures exact matching for that route only.
+
+## Issue 22 — Progress Tracking & Persistence
+
+- **LocalStorage in tests requires globalThis, not global**: When mocking localStorage in test files,
+  use `Object.defineProperty(globalThis, 'localStorage', ...)` instead of `global`. The `global`
+  identifier triggers ESLint's `no-undef` error in modern JavaScript environments where `globalThis`
+  is the standard way to access the global object.
+- **JSX in test files requires .tsx extension**: Test files that contain JSX syntax (e.g., wrapper
+  components for React Testing Library) must use the `.tsx` extension. Using `.ts` causes ESLint
+  parsing errors like "Unterminated regular expression literal" because the parser expects plain
+  TypeScript, not JSX.
+- **Context providers must wrap all consuming components in tests**: When components use a React
+  Context (like ProgressContext via the useProgress hook), all test files that render those components
+  must wrap them in the corresponding Provider. Forgetting to add the ProgressProvider wrapper causes
+  runtime errors: "useProgress must be used within a ProgressProvider". Update all existing tests
+  when adding context dependencies to components.
+- **React Context with automatic persistence**: Combining React Context with `useEffect` for
+  auto-saving to localStorage provides a clean pattern for persistent state. The ProgressProvider
+  loads initial state from localStorage and saves on every state change, making persistence transparent
+  to consuming components.
+- **Separate export of context and provider**: The react-refresh/only-export-components ESLint warning
+  appears when a file exports both a React Context and a Provider component. This is a minor best
+  practice warning (not an error) suggesting to split the context definition and provider into separate
+  files. It's safe to leave as-is for simple contexts, though splitting is cleaner for larger apps.
+- **Type-safe validation for loaded data**: When loading data from localStorage, always validate the
+  structure with a type guard function (`isValidProgress`) before casting to the expected type. This
+  prevents runtime errors from corrupted or outdated data and allows graceful degradation to default
+  values.
+- **First-try correctness tracking limitation**: The current implementation assumes all completed
+  exercises are correct on the first try (`correctFirstTry: true`) because the ExerciseContainer
+  doesn't yet expose whether the student needed multiple attempts. A future enhancement would be to
+  modify ExerciseContainer to track and report first-try success via the completion callback.

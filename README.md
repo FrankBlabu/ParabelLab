@@ -30,8 +30,9 @@ the pure-function math engine (Step 02), the SVG-based coordinate system with
 parabola rendering (Step 03), the interactive Parabola Explorer (Step 04), the
 learning module framework (Step 05), Module 1: Vertex Form to Normal Form
 (Step 06), Module 2: Normal Form to Vertex Form (Step 07), Module 3: Basic
-Term Transformations (Step 08), and the App Shell & Navigation (Step 09) are
-implemented. See [doc/planning/00-overview.md](doc/planning/00-overview.md)
+Term Transformations (Step 08), the App Shell & Navigation (Step 09), and
+Progress Tracking & Persistence (Step 10) are implemented. 
+See [doc/planning/00-overview.md](doc/planning/00-overview.md)
 for the detailed technical plan and implementation roadmap.
 
 ## Documentation
