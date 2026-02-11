@@ -36,7 +36,7 @@ export default function ExplorerPage(): JSX.Element {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8"
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8 page-transition"
       data-testid="explorer-page"
     >
       <article className="max-w-7xl mx-auto">

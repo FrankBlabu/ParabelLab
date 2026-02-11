@@ -68,7 +68,7 @@ export default function Module2Page(): JSX.Element {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8"
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8 page-transition"
       data-testid="module2-page"
     >
       <article className="max-w-5xl mx-auto">

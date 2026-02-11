@@ -302,3 +302,40 @@
   carefully check for duplicate closing tags (e.g., `</div></div>` or `}}`). These cause parsing
   errors that prevent the linter from running. Use proper indentation and code folding in the editor
   to visually verify matching pairs.
+
+## Issue 20 — Final Polish & Documentation
+
+- **Page transitions with CSS animations**: Adding smooth page transitions enhances the user experience.
+  Define a `@keyframes fadeIn` animation with opacity and slight vertical translation (`translateY`),
+  then apply it via a utility class (`.page-transition`) to page containers. A duration of 0.3s with
+  `ease-out` timing feels natural without slowing down navigation.
+- **Lazy loading with React.lazy**: For better initial load performance, use `React.lazy` to code-split
+  module pages. Wrap lazy-loaded routes in `<Suspense>` with a loading fallback. This reduces the
+  initial bundle size since module pages are only loaded when needed.
+- **Loading states with Suspense**: Create a dedicated `LoadingFallback` component with a spinning
+  indicator and localized text. The fallback should be visually consistent with the app's design
+  (centered, with branded colors).
+- **Error boundaries for resilience**: Implement a class-based `ErrorBoundary` component to catch
+  unhandled React errors. Display a friendly German error message with a "reload page" button.
+  Always wrap the root app in the error boundary to prevent white screens on unexpected errors.
+- **Graceful localStorage handling**: The storage utility already handles quota exceeded and parse
+  errors gracefully by logging warnings and returning defaults. This pattern ensures the app continues
+  functioning even if persistence fails (e.g., in private browsing mode).
+- **Comprehensive user documentation**: Create a `BENUTZERHANDBUCH.md` (user manual) targeted at
+  students, parents, and teachers. Include: getting started, module descriptions, tips for learning,
+  FAQ, and privacy information. Use clear German language appropriate for the target age group (9th grade).
+- **Developer documentation in README**: A comprehensive README should include: project overview,
+  quick start guide, available scripts, architecture overview, project structure tree, testing guide,
+  styling conventions, contribution guidelines, API documentation, browser compatibility, deployment
+  instructions, and contact information. Use emojis sparingly for section headers to improve scannability.
+- **Separate CONTRIBUTING.md**: Extract detailed contribution guidelines into a dedicated file.
+  Cover: development setup, workflow (branching, commits, PRs), code style conventions, testing
+  requirements, documentation updates, code review process, bug report templates, and best practices.
+  This keeps the README focused while providing in-depth guidance for contributors.
+- **ESLint warnings vs errors**: Some ESLint warnings (like `react-refresh/only-export-components`
+  for context files) are informational and don't affect production builds. These can be acceptable
+  if fixing them requires significant refactoring without measurable benefit. Focus on eliminating
+  errors first.
+- **Favicon and meta tags**: Update `index.html` with a proper favicon (using the project icon),
+  descriptive title in German, and a meta description for SEO and browser tabs. Use type="image/png"
+  for PNG favicons instead of type="image/svg+xml".

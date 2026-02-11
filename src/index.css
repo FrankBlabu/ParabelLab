@@ -40,6 +40,23 @@ body {
   height: 100vh;
 }
 
+/* Page transition animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Shake animation for incorrect answers */
 @keyframes shake {
   0% {
     transform: translateX(0);
@@ -63,4 +80,11 @@ body {
 
 .animate-shake {
   animation: shake 0.3s ease-in-out;
+}
+
+/* Smooth transitions for interactive elements */
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.2s ease-in-out;
+  }
 }
