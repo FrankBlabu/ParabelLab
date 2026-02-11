@@ -5,14 +5,17 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { ProgressProvider } from '../../src/context/ProgressContext';
 import Module3Page from '../../src/pages/Module3Page';
 
 describe('Module3Page', () => {
   const renderModule3Page = () => {
     return render(
-      <BrowserRouter>
-        <Module3Page />
-      </BrowserRouter>,
+      <ProgressProvider>
+        <BrowserRouter>
+          <Module3Page />
+        </BrowserRouter>
+      </ProgressProvider>,
     );
   };
 

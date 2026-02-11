@@ -10,17 +10,20 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { ProgressProvider } from '../../src/context/ProgressContext';
 import HomePage from '../../src/pages/HomePage';
 
 /**
- * Test helper: Renders HomePage wrapped in a Router
- * (Required because HomePage uses Link components)
+ * Test helper: Renders HomePage wrapped in a Router and ProgressProvider
+ * (Required because HomePage uses Link components and useProgress hook)
  */
 function renderHomePage() {
   return render(
-    <BrowserRouter>
-      <HomePage />
-    </BrowserRouter>,
+    <ProgressProvider>
+      <BrowserRouter>
+        <HomePage />
+      </BrowserRouter>
+    </ProgressProvider>,
   );
 }
 
