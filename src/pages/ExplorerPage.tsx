@@ -12,7 +12,6 @@
  * Responsive: stacks vertically on mobile devices.
  */
 
-import React from 'react';
 import type { JSX } from 'react';
 import { useParabola } from '../hooks/useParabola';
 import CoordinateSystem from '../components/graph/CoordinateSystem';

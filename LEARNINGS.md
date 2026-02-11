@@ -102,3 +102,19 @@
   steps declarative and avoids hardcoding input layouts.
 - Text inputs with `inputMode="decimal"` allow negative numbers and decimals while
   still bringing up numeric keyboards on touch devices.
+
+## Issue 9 — Module 1: Vertex Form to Normal Form
+
+- When generating multi-step exercises with sign-dependent templates, always compute
+  the sign character separately from the absolute value to avoid double negatives in
+  the display (e.g., `f(x) = 2x² - 12x + 19` not `f(x) = 2x² + -12x + 19`).
+- Display-only steps (no blanks) in a multi-step exercise are useful for pedagogical
+  scaffolding — they show intermediate results so the student doesn't lose context.
+  The `ExerciseContainer` handles steps with zero blanks gracefully.
+- Special cases (`d=0`, `a=1`, `d=0 && e=0`) each need distinct step templates to
+  avoid showing meaningless terms (like `0x`) or redundant blanks. It's better to
+  branch in the exercise generator than to handle this in the UI.
+- The existing `generateVertexToNormalExercise` uses a simple 2-step approach
+  (compute b, compute c). Module 1's `generateModule1Exercise` provides a richer
+  4-step pedagogical flow (binomial expansion, substitution, distribute a, combine)
+  that is better suited for learning but coexists alongside the simpler generator.
