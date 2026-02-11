@@ -899,3 +899,329 @@ export const generateTermTransformationExercise = (
     parabolaParams: vertexParams,
   };
 };
+
+/**
+ * Generates expanding brackets exercises for Module 3.
+ *
+ * Difficulty levels:
+ * - Easy: Simple distribution a(x + b)
+ * - Medium: Binomial formulas (x ± a)²
+ * - Hard: Nested brackets a(x + b)²
+ */
+export const generateExpandingExercise = (
+  difficulty: Difficulty,
+  seed: number = DEFAULT_SEED,
+): Exercise => {
+  const random = createSeededRandom(seed + 23);
+
+  if (difficulty === 'easy') {
+    // Simple distribution: a(x + b) = ax + ab
+    const a = randomInt(random, 2, 5);
+    let b = randomInt(random, -5, 5);
+    if (b === 0) b = 1;
+
+    const resultB = a * b;
+    const bSign = b >= 0 ? '+' : '-';
+    const bAbs = Math.abs(b);
+
+    const steps: ExerciseStep[] = [
+      createStep({
+        id: 'expand-simple',
+        instruction: 'Multipliziere die Klammer aus.',
+        explanation: `Multipliziere ${a} mit jedem Term in der Klammer: ${a} · x und ${a} · ${b}.`,
+        template: `${a}(x ${bSign} ${bAbs}) = {ax}x ${getSignChar(resultB)} {ab}`,
+        blanks: [
+          { id: 'ax', correctAnswer: a, label: 'a' },
+          { id: 'ab', correctAnswer: Math.abs(resultB), label: 'ab' },
+        ],
+        hint: `Berechne ${a} · x = ${a}x und ${a} · ${b} = ${resultB}.`,
+      }),
+    ];
+
+    return {
+      id: `expand-easy-${seed}`,
+      title: 'Ausmultiplizieren',
+      description: `Multipliziere die Klammer aus: ${a}(x ${bSign} ${bAbs})`,
+      steps,
+    };
+  } else if (difficulty === 'medium') {
+    // Binomial formula: (x ± a)² = x² ± 2ax + a²
+    const a = randomInt(random, 2, 6);
+    const sign = random() > 0.5 ? '+' : '-';
+    const twoA = 2 * a;
+    const aSq = a * a;
+    const expandSign = sign === '+' ? '+' : '-';
+
+    const steps: ExerciseStep[] = [
+      createStep({
+        id: 'expand-binomial',
+        instruction: 'Wende die binomische Formel an.',
+        explanation:
+          sign === '+'
+            ? `Die 1. binomische Formel: (a + b)² = a² + 2ab + b². Hier ist a = x und b = ${a}.`
+            : `Die 2. binomische Formel: (a - b)² = a² - 2ab + b². Hier ist a = x und b = ${a}.`,
+        template: `(x ${sign} ${a})² = x² ${expandSign} {twoA}x + {aSq}`,
+        blanks: [
+          { id: 'twoA', correctAnswer: twoA, label: '2a' },
+          { id: 'aSq', correctAnswer: aSq, label: 'a²' },
+        ],
+        hint: `Berechne 2 · ${a} = ${twoA} und ${a}² = ${aSq}.`,
+      }),
+    ];
+
+    return {
+      id: `expand-medium-${seed}`,
+      title: 'Ausmultiplizieren',
+      description: `Wende die binomische Formel an: (x ${sign} ${a})²`,
+      steps,
+    };
+  } else {
+    // Hard: Nested brackets a(x + b)² = a(x² + 2bx + b²) = ax² + 2abx + ab²
+    const a = randomInt(random, 2, 4);
+    const b = randomInt(random, 1, 4);
+    const sign = random() > 0.5 ? '+' : '-';
+    const bVal = sign === '+' ? b : -b;
+
+    const twoB = 2 * b;
+    const bSq = b * b;
+    const aCoeff = a;
+    const abx = a * 2 * bVal;
+    const abSq = a * bSq;
+
+    const expandSign = sign === '+' ? '+' : '-';
+    const resultSign = getSignChar(abx);
+    const resultAbs = Math.abs(abx);
+
+    const steps: ExerciseStep[] = [
+      createStep({
+        id: 'expand-nested-1',
+        instruction: 'Wende zuerst die binomische Formel an.',
+        explanation: `Expandiere (x ${sign} ${b})² mit der binomischen Formel.`,
+        template: `(x ${sign} ${b})² = x² ${expandSign} {twoB}x + {bSq}`,
+        blanks: [
+          { id: 'twoB', correctAnswer: twoB, label: '2b' },
+          { id: 'bSq', correctAnswer: bSq, label: 'b²' },
+        ],
+        hint: `Berechne 2 · ${b} und ${b}².`,
+      }),
+      createStep({
+        id: 'expand-nested-2',
+        instruction: 'Multipliziere nun den Faktor aus.',
+        explanation: `Multipliziere ${a} mit jedem Term der Klammer.`,
+        template: `${a}(x² ${expandSign} ${twoB}x + ${bSq}) = {a}x² ${resultSign} {abx}x + {abSq}`,
+        blanks: [
+          { id: 'a', correctAnswer: aCoeff, label: 'a' },
+          { id: 'abx', correctAnswer: resultAbs, label: '2ab' },
+          { id: 'abSq', correctAnswer: abSq, label: 'ab²' },
+        ],
+        hint: `Berechne ${a} · ${twoB} = ${abx} und ${a} · ${bSq} = ${abSq}.`,
+      }),
+    ];
+
+    return {
+      id: `expand-hard-${seed}`,
+      title: 'Ausmultiplizieren',
+      description: `Multipliziere aus: ${a}(x ${sign} ${b})²`,
+      steps,
+    };
+  }
+};
+
+/**
+ * Generates factoring exercises for Module 3.
+ *
+ * Difficulty levels:
+ * - Easy: Factor out constant: ax + ab = a(x + b)
+ * - Medium: Factor quadratic: x² + bx = x(x + b)
+ * - Hard: Recognize binomial formula: x² + 2ax + a² = (x + a)²
+ */
+export const generateFactoringExercise = (
+  difficulty: Difficulty,
+  seed: number = DEFAULT_SEED,
+): Exercise => {
+  const random = createSeededRandom(seed + 29);
+
+  if (difficulty === 'easy') {
+    // Factor out constant: ax + ab = a(x + b)
+    const a = randomInt(random, 2, 6);
+    let b = randomInt(random, -5, 5);
+    if (b === 0) b = 1;
+
+    const ab = a * b;
+    const bSign = b >= 0 ? '+' : '-';
+    const bAbs = Math.abs(b);
+    const abSign = ab >= 0 ? '+' : '-';
+    const abAbs = Math.abs(ab);
+
+    const steps: ExerciseStep[] = [
+      createStep({
+        id: 'factor-simple',
+        instruction: 'Klammere den gemeinsamen Faktor aus.',
+        explanation: `Beide Terme sind durch ${a} teilbar. Klammere ${a} aus.`,
+        template: `${a}x ${abSign} ${abAbs} = {factor}(x ${bSign} {b})`,
+        blanks: [
+          { id: 'factor', correctAnswer: a, label: 'Faktor' },
+          { id: 'b', correctAnswer: bAbs, label: 'b' },
+        ],
+        hint: `Teile ${abAbs} durch ${a} um den zweiten Term in der Klammer zu erhalten.`,
+      }),
+    ];
+
+    return {
+      id: `factor-easy-${seed}`,
+      title: 'Faktorisieren',
+      description: `Klammere den gemeinsamen Faktor aus: ${a}x ${abSign} ${abAbs}`,
+      steps,
+    };
+  } else if (difficulty === 'medium') {
+    // Factor quadratic: x² + bx = x(x + b)
+    let b = randomInt(random, -6, 6);
+    if (b === 0) b = 1;
+
+    const bSign = b >= 0 ? '+' : '-';
+    const bAbs = Math.abs(b);
+
+    const steps: ExerciseStep[] = [
+      createStep({
+        id: 'factor-quadratic',
+        instruction: 'Klammere x aus.',
+        explanation: 'Beide Terme enthalten mindestens ein x. Klammere x aus.',
+        template: `x² ${bSign} ${bAbs}x = x(x ${bSign} {b})`,
+        blanks: [{ id: 'b', correctAnswer: bAbs, label: 'b' }],
+        hint: `x² ${bSign} ${bAbs}x = x · (x ${bSign} ${bAbs})`,
+      }),
+    ];
+
+    return {
+      id: `factor-medium-${seed}`,
+      title: 'Faktorisieren',
+      description: `Klammere x aus: x² ${bSign} ${bAbs}x`,
+      steps,
+    };
+  } else {
+    // Hard: Recognize binomial: x² ± 2ax + a² = (x ± a)²
+    const a = randomInt(random, 2, 5);
+    const sign = random() > 0.5 ? '+' : '-';
+    const twoA = 2 * a;
+    const aSq = a * a;
+
+    const steps: ExerciseStep[] = [
+      createStep({
+        id: 'factor-binomial',
+        instruction: 'Erkenne die binomische Formel und faktorisiere.',
+        explanation:
+          sign === '+'
+            ? `Dies ist die 1. binomische Formel rückwärts: x² + 2ax + a² = (x + a)².`
+            : `Dies ist die 2. binomische Formel rückwärts: x² - 2ax + a² = (x - a)².`,
+        template: `x² ${sign} ${twoA}x + ${aSq} = (x ${sign} {a})²`,
+        blanks: [{ id: 'a', correctAnswer: a, label: 'a' }],
+        hint: `Überprüfe: 2 · ${a} = ${twoA} und ${a}² = ${aSq}.`,
+      }),
+    ];
+
+    return {
+      id: `factor-hard-${seed}`,
+      title: 'Faktorisieren',
+      description: `Erkenne die binomische Formel: x² ${sign} ${twoA}x + ${aSq}`,
+      steps,
+    };
+  }
+};
+
+/**
+ * Generates rearranging equations exercises for Module 3.
+ *
+ * Difficulty levels:
+ * - Easy: Solve linear equation: ax + b = 0
+ * - Medium: Find zeros of quadratic with integer solutions: x² - c = 0
+ * - Hard: Simplify fractions: (ax²) / (bx) = cx
+ */
+export const generateRearrangingExercise = (
+  difficulty: Difficulty,
+  seed: number = DEFAULT_SEED,
+): Exercise => {
+  const random = createSeededRandom(seed + 31);
+
+  if (difficulty === 'easy') {
+    // Solve linear: ax + b = 0 → x = -b/a
+    const a = randomInt(random, 2, 5);
+    let b = randomInt(random, -10, 10);
+    if (b === 0) b = randomInt(random, 1, 5);
+
+    const solution = -b / a;
+    const bSign = b >= 0 ? '+' : '-';
+    const bAbs = Math.abs(b);
+
+    const steps: ExerciseStep[] = [
+      createStep({
+        id: 'rearrange-linear',
+        instruction: `Löse die Gleichung f(x) = 0 nach x auf.`,
+        explanation: `Löse ${a}x ${bSign} ${bAbs} = 0 durch Umstellen: x = ${-b}/${a}.`,
+        template: `x = {solution}`,
+        blanks: [
+          { id: 'solution', correctAnswer: solution, tolerance: 0.001, label: 'x' },
+        ],
+        hint: `Subtrahiere ${b} und teile durch ${a}.`,
+      }),
+    ];
+
+    return {
+      id: `rearrange-easy-${seed}`,
+      title: 'Gleichungen umstellen',
+      description: `Löse die Gleichung: f(x) = ${a}x ${bSign} ${bAbs} = 0`,
+      steps,
+    };
+  } else if (difficulty === 'medium') {
+    // Find zeros: x² - c = 0 → x = ±√c
+    const c = pickFromArray(random, [4, 9, 16, 25, 36] as const);
+    const sqrtC = Math.sqrt(c);
+
+    const steps: ExerciseStep[] = [
+      createStep({
+        id: 'rearrange-quadratic',
+        instruction: 'Bestimme die Nullstellen der Funktion.',
+        explanation: `Löse x² - ${c} = 0: x² = ${c}, also x = ±√${c} = ±${sqrtC}.`,
+        template: `x₁ = {x1}, x₂ = {x2}`,
+        blanks: [
+          { id: 'x1', correctAnswer: -sqrtC, label: 'x₁' },
+          { id: 'x2', correctAnswer: sqrtC, label: 'x₂' },
+        ],
+        hint: `Addiere ${c} auf beiden Seiten und ziehe die Wurzel.`,
+      }),
+    ];
+
+    return {
+      id: `rearrange-medium-${seed}`,
+      title: 'Gleichungen umstellen',
+      description: `Finde die Nullstellen: f(x) = x² - ${c}`,
+      steps,
+    };
+  } else {
+    // Hard: Simplify fraction: (ax²) / (bx) = (a/b)x
+    const numerator = randomInt(random, 4, 12);
+    const divisor = randomInt(random, 2, 4);
+    const result = numerator / divisor;
+
+    const steps: ExerciseStep[] = [
+      createStep({
+        id: 'rearrange-fraction',
+        instruction: 'Kürze den Bruch so weit wie möglich.',
+        explanation: `Kürze x im Zähler und Nenner: (${numerator}x²)/(${divisor}x) = ${numerator}/${divisor} · x.`,
+        template: `(${numerator}x²) / (${divisor}x) = {result}x`,
+        blanks: [
+          { id: 'result', correctAnswer: result, tolerance: 0.001, label: 'Koeffizient' },
+        ],
+        hint: `Kürze x und berechne ${numerator}/${divisor}.`,
+      }),
+    ];
+
+    return {
+      id: `rearrange-hard-${seed}`,
+      title: 'Gleichungen umstellen',
+      description: `Vereinfache: (${numerator}x²) / (${divisor}x)`,
+      steps,
+    };
+  }
+};
+
+const getSignChar = (value: number): string => (value >= 0 ? '+' : '-');

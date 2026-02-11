@@ -161,6 +161,29 @@
   that the final vertex coordinates (stored in `exercise.parabolaParams`) match the expected
   output of `normalToVertex(...)`. This ensures round-trip correctness without duplicating the
   mathematical logic in tests.
+
+## Issue 11 — Module 3: Basic Term Transformations
+
+- **Category-based module architecture:** Module 3 uses a category selector (expanding, factoring,
+  rearranging) instead of a single exercise type. This requires separate state tracking for each
+  category's stats (solved/total), managed via a `Record<Module3Category, CategoryStats>` object.
+  Each category maintains its own progress independently.
+- **Pure algebra exercises without visualization:** Module 3 exercises don't need parabola
+  parameters or coordinate system visualization. Simply omit the `parabolaParams` field from
+  the exercise generator return value, and the `ExerciseContainer` component will automatically
+  hide the coordinate system section.
+- **Variable reassignment in generators:** When conditionally reassigning parameter values
+  (e.g., `if (b === 0) b = 1`), use `let` instead of `const` to avoid TypeScript errors.
+  This pattern is common for ensuring parameters meet certain constraints (non-zero, even, etc.).
+- **Multi-step difficulty progression:** Hard exercises in Module 3 use multi-step solutions
+  (e.g., expanding nested brackets in two steps: first apply binomial formula, then distribute
+  the factor). This pedagogical structure helps students learn complex transformations incrementally.
+- **Sign formatting consistency:** The `getSignChar(value: number)` helper function should be
+  defined once and reused across all generators to ensure consistent sign handling in templates
+  (e.g., `${sign} ${abs}` instead of raw numbers that might display as `+-5`).
+- **Category selector UI pattern:** Implement category tabs with individual score displays
+  (`{solved} / {total}`) on each tab. This provides immediate visual feedback on progress per
+  category and encourages students to explore all three types of exercises.
 - **Signed values in templates and hints:** When displaying mathematical intermediate steps
   (like `b/2 = X/2`), always use the signed value of the coefficient, not `Math.abs()`. Using
   the absolute value causes incorrect intermediate calculations for negative coefficients

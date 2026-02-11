@@ -39,3 +39,5 @@ export type AnswerState = 'empty' | 'correct' | 'incorrect' | 'hint-shown';
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
 export type TransformationType = 'shift' | 'stretch' | 'reflect';
+
+export type Module3Category = 'expanding' | 'factoring' | 'rearranging';
