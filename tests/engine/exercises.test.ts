@@ -9,6 +9,7 @@ import {
   generateVertexToNormalExercise,
   generateNormalToVertexExercise,
   generateModule1Exercise,
+  generateModule2Exercise,
 } from '../../src/engine/exercises';
 import { vertexToNormal, normalToVertex } from '../../src/engine/conversion';
 
@@ -196,5 +197,146 @@ describe('generateModule1Exercise', () => {
   it('step 2 is display-only with no blanks', () => {
     const exercise = generateModule1Exercise('medium', 42);
     expect(exercise.steps[1].blanks).toHaveLength(0);
+  });
+});
+
+describe('generateModule2Exercise', () => {
+  /*
+   * Module 2 exercises for a=1 should have 6 steps.
+   */
+  it('generates exercises with 6 steps for a=1', () => {
+    const exercise = generateModule2Exercise('easy', 42);
+    expect(exercise.steps).toHaveLength(6);
+  });
+
+  /*
+   * Module 2 exercises for a≠1 should have 7 steps (including factoring).
+   */
+  it('generates exercises with 7 steps for a≠1', () => {
+    const exercise = generateModule2Exercise('hard', 42);
+    expect(exercise.steps).toHaveLength(7);
+  });
+
+  /*
+   * Every step should have an instruction and a template.
+   */
+  it('every step has instruction and template', () => {
+    const exercise = generateModule2Exercise('easy', 42);
+    for (const step of exercise.steps) {
+      expect(step.instruction).toBeTruthy();
+      expect(step.template).toBeTruthy();
+    }
+  });
+
+  /*
+   * Final step answers should match the correct vertex form coordinates.
+   * Since parabolaParams is the result of normalToVertex(), we just verify
+   * that the final d and e blanks match the parabolaParams.
+   */
+  it('produces correct vertex coordinates matching normalToVertex', () => {
+    const exercise = generateModule2Exercise('medium', 42);
+    const vertexParams = exercise.parabolaParams;
+
+    if (!vertexParams) {
+      throw new Error('Missing parabola parameters for exercise');
+    }
+
+    // The exercise.parabolaParams is already the vertex form (result of normalToVertex)
+    // Verify the final step blanks match these values
+    const finalStep = exercise.steps[exercise.steps.length - 1];
+    const dBlank = finalStep.blanks.find((b) => b.id === 'd');
+    const eBlank = finalStep.blanks.find((b) => b.id === 'e');
+
+    expect(dBlank?.correctAnswer).toBeCloseTo(vertexParams.d, 2);
+    expect(eBlank?.correctAnswer).toBeCloseTo(vertexParams.e, 2);
+  });
+
+  /*
+   * Easy difficulty should only use a=1.
+   */
+  it('easy difficulty uses a=1', () => {
+    for (let seed = 1; seed <= 10; seed++) {
+      const exercise = generateModule2Exercise('easy', seed);
+      expect(exercise.parabolaParams?.a).toBe(1);
+    }
+  });
+
+  /*
+   * Easy difficulty should only use even b values.
+   */
+  it('easy difficulty uses even b values', () => {
+    for (let seed = 1; seed <= 20; seed++) {
+      const exercise = generateModule2Exercise('easy', seed);
+      // Step 1 blank "bHalf" is b/2; for even b this must be an integer
+      const step1 = exercise.steps[0];
+      const bHalfBlank = step1.blanks.find((bl) => bl.id === 'bHalf');
+      expect(bHalfBlank).toBeTruthy();
+      expect(Number.isInteger(bHalfBlank!.correctAnswer)).toBe(true);
+    }
+  });
+
+  /*
+   * Medium difficulty should use a=1 but any b.
+   */
+  it('medium difficulty uses a=1', () => {
+    for (let seed = 1; seed <= 10; seed++) {
+      const exercise = generateModule2Exercise('medium', seed);
+      expect(exercise.parabolaParams?.a).toBe(1);
+    }
+  });
+
+  /*
+   * Hard difficulty should use a≠1.
+   */
+  it('hard difficulty uses a≠1', () => {
+    for (let seed = 1; seed <= 10; seed++) {
+      const exercise = generateModule2Exercise('hard', seed);
+      expect(exercise.parabolaParams?.a).not.toBe(1);
+    }
+  });
+
+  /*
+   * The final step blanks (d and e) should match the expected vertex form.
+   */
+  it('final step has correct d and e blanks', () => {
+    const exercise = generateModule2Exercise('medium', 100);
+    const params = exercise.parabolaParams;
+
+    if (!params) {
+      throw new Error('Missing parabola parameters for exercise');
+    }
+
+    const finalStep = exercise.steps[exercise.steps.length - 1];
+    const dBlank = finalStep.blanks.find((b) => b.id === 'd');
+    const eBlank = finalStep.blanks.find((b) => b.id === 'e');
+
+    expect(dBlank).toBeTruthy();
+    expect(eBlank).toBeTruthy();
+    expect(dBlank?.correctAnswer).toBeCloseTo(params.d, 2);
+    expect(eBlank?.correctAnswer).toBeCloseTo(params.e, 2);
+  });
+
+  /*
+   * Each step should have at least an instruction and explanation.
+   */
+  it('each step has instruction and explanation', () => {
+    const exercise = generateModule2Exercise('hard', 50);
+    for (const step of exercise.steps) {
+      expect(step.instruction).toBeTruthy();
+      expect(step.explanation).toBeTruthy();
+      expect(step.instruction.length).toBeGreaterThan(0);
+      expect(step.explanation.length).toBeGreaterThan(0);
+    }
+  });
+
+  /*
+   * The exercise should include parabola parameters for visualization.
+   */
+  it('includes parabola parameters for visualization', () => {
+    const exercise = generateModule2Exercise('easy', 42);
+    expect(exercise.parabolaParams).toBeTruthy();
+    expect(exercise.parabolaParams?.a).toBeDefined();
+    expect(exercise.parabolaParams?.d).toBeDefined();
+    expect(exercise.parabolaParams?.e).toBeDefined();
   });
 });

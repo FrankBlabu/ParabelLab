@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import type { JSX } from 'react';
 import ExplorerPage from './pages/ExplorerPage';
 import Module1Page from './pages/Module1Page';
+import Module2Page from './pages/Module2Page';
 
 /**
  * Root application component.
@@ -16,6 +17,7 @@ export default function App(): JSX.Element {
       <Routes>
         <Route path="/" element={<ExplorerPage />} />
         <Route path="/module1" element={<Module1Page />} />
+        <Route path="/module2" element={<Module2Page />} />
       </Routes>
     </Router>
   );

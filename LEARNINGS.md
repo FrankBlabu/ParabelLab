@@ -134,3 +134,46 @@
   needs to track progress (solved exercise count), add an optional callback prop to the
   child component (`ExerciseContainer`). Call it at the right lifecycle moment (after the
   final step is completed) to trigger state updates in the parent.
+
+## Issue 10 — Module 2: Normal Form to Vertex Form
+
+- **Two-path exercise architecture:** When an exercise has fundamentally different step counts
+  based on a parameter (like completing the square with `a=1` vs `a≠1`), branch at the top
+  level with `if (a === 1) { ... 6 steps ... } else { ... 7 steps ... }` rather than trying to
+  conditionally render individual steps. This keeps each path clean and testable.
+- **Handling b=0 edge case:** While completing the square normally requires adding and subtracting
+  `(b/(2a))²`, when `b=0` the completing term is 0 and the process trivializes. Generate exercises
+  that avoid `b=0` entirely (check and reassign if zero) rather than adding special-case rendering
+  logic—it's simpler to just exclude the edge case than to handle it in the UI.
+- **Tolerance for fractional answers:** Steps involving `b/2`, `b/(2a)`, or their squares produce
+  fractional results (e.g., `1/3`). Use `tolerance: 0.001` on blanks for these values to allow
+  students to round to reasonable decimal places without failing. Test assertions also need
+  `toBeCloseTo(expected, 2)` rather than exact equality.
+- **Sign-aware formatting helpers:** Always reuse the shared `formatNormalForm()` from
+  `src/utils/formatting.ts` rather than creating local duplicates. A local helper diverges from
+  the shared one over time (e.g., different handling of zero terms) and produces inconsistent
+  equation display across the app.
+- **Generating parameters by difficulty:** The parameter generation strategy should be explicit:
+  Easy uses integers with even `b` to avoid fractions, Medium uses integers with any `b`, Hard uses
+  non-unit `a` to force factoring. Document these rules in comments so future modules can follow
+  the same progression pattern.
+- **Test correctness via conversion functions:** Module 2 exercises can be validated by checking
+  that the final vertex coordinates (stored in `exercise.parabolaParams`) match the expected
+  output of `normalToVertex(...)`. This ensures round-trip correctness without duplicating the
+  mathematical logic in tests.
+- **Signed values in templates and hints:** When displaying mathematical intermediate steps
+  (like `b/2 = X/2`), always use the signed value of the coefficient, not `Math.abs()`. Using
+  the absolute value causes incorrect intermediate calculations for negative coefficients
+  (e.g., showing `4/2` when `b = -4` instead of `-4/2`). The same applies to hints.
+- **Test assertions must actually assert:** Never guard test expectations with `if` conditions
+  like `if (blanks.length > 0) { expect(...) }` — this silently passes when the condition is
+  false, making the test meaningless. Use `getAllByRole` (which throws if empty) instead of
+  `queryAllByRole` + conditional guard.
+- **Blank correctAnswer must match what the template implies:** If a template shows a blank
+  inside a formula context (e.g., `{bOver2a}²`), the `correctAnswer` must match the signed
+  mathematical value the student computes, not an absolute value. Either accept the signed value
+  or explicitly change the template to show `|b/(2a)|` to clarify.
+- **Wire up all component callbacks:** When a parent tracks state (like solved exercise count),
+  every child interaction that affects that state must be wired up. Forgetting to pass `onComplete`
+  to `ExerciseContainer` means the `solved` counter never increments, making the score display
+  permanently show 0.
