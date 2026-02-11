@@ -28,6 +28,7 @@ import {
   generateRearrangingExercise,
 } from '../engine/exercises';
 import ExerciseContainer from '../components/math/ExerciseContainer';
+import { useProgress } from '../hooks/useProgress';
 
 const DIFFICULTY_LABELS: Record<Difficulty, string> = {
   easy: 'Einfach',
@@ -53,6 +54,7 @@ interface CategoryStats {
 }
 
 export default function Module3Page(): JSX.Element {
+  const { recordExerciseCompletion } = useProgress();
   const [category, setCategory] = useState<Module3Category>('expanding');
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [seed, setSeed] = useState(1);
@@ -91,7 +93,9 @@ export default function Module3Page(): JSX.Element {
         solved: prev[category].solved + 1,
       },
     }));
-  }, [category]);
+    // Track in persistent progress (assume first-try correct for now)
+    recordExerciseCompletion('module3', difficulty, true);
+  }, [category, difficulty, recordExerciseCompletion]);
 
   const handleCategoryChange = useCallback((newCategory: Module3Category): void => {
     setCategory(newCategory);
