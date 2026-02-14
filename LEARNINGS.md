@@ -362,3 +362,29 @@
 - **Using sed for batch updates**: For planning/documentation files that don't require reading first,
   `sed -i 's/OldName/NewName/g' file1 file2 file3` is efficient for batch replacements across
   multiple files at once.
+
+## Issue 38 — Standalone Deployment
+
+- **Electron for desktop apps**: Electron is the industry-standard solution for packaging web applications
+  as standalone desktop executables. Combined with `vite-plugin-electron`, it integrates seamlessly with
+  Vite-based React applications.
+- **electron-builder for packaging**: `electron-builder` provides a robust, configurable system for creating
+  platform-specific installers (AppImage/deb for Linux, NSIS/portable for Windows, dmg/zip for macOS).
+  Configuration lives in `package.json` under the `build` key.
+- **Vite base path for Electron**: When building for Electron, set `base: './'` in the Vite build config
+  to ensure correct relative paths for loading assets from the local file system instead of a web server.
+- **ESLint flat config for multi-environment**: Modern ESLint (v8+) uses flat config arrays. To support
+  both browser (React) and Node.js (Electron main process) code in the same project, create separate
+  config objects with different `globals` and `files` patterns. Electron files need `globals.node` to
+  recognize `__dirname`, `process`, and `require`.
+- **Security best practices for Electron**: Always use `nodeIntegration: false`, `contextIsolation: true`,
+  and `sandbox: true` in `BrowserWindow.webPreferences` to prevent security vulnerabilities. Expose only
+  necessary APIs via preload scripts using `contextBridge`.
+- **Cross-platform build limitations**: While electron-builder supports cross-compilation, macOS builds
+  require macOS (due to Apple restrictions), and Windows builds from Linux require wine. For production
+  use, consider CI/CD with native builds on each target platform (e.g., GitHub Actions with matrix builds).
+- **Code signing requirements**: Unsigned executables trigger security warnings on Windows (SmartScreen)
+  and macOS (Gatekeeper). For development/internal use, users can bypass these warnings. For public
+  distribution, obtain code-signing certificates (Windows) or Apple Developer membership (macOS).
+- **Ignore electron build outputs**: Add `dist-electron/` and `release/` to `.gitignore` and ESLint
+  ignore patterns to prevent committing build artifacts.
