@@ -388,3 +388,7 @@
   distribution, obtain code-signing certificates (Windows) or Apple Developer membership (macOS).
 - **Ignore electron build outputs**: Add `dist-electron/` and `release/` to `.gitignore` and ESLint
   ignore patterns to prevent committing build artifacts.
+- **ES modules in Electron main process**: When `package.json` has `"type": "module"`, the Electron main
+  process must use ES module syntax. Use `import.meta.url` with `fileURLToPath()` to get `__dirname`
+  equivalent, and use `import` instead of `require()`. Avoid dependencies that require CommonJS patterns
+  like `electron-squirrel-startup` unless absolutely necessary.
