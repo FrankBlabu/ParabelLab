@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import type { JSX } from 'react';
 import { useProgress, getModuleProgress } from '../hooks/useProgress';
+import logoIcon from '/icon.png';
 
 /**
  * Module card configuration
@@ -144,7 +145,7 @@ export default function HomePage(): JSX.Element {
       {/* Welcome Section */}
       <section className="text-center mb-12">
         <img
-          src="icon.png"
+          src={logoIcon}
           alt="Parabola Logo"
           className="w-24 h-24 mx-auto mb-6"
         />

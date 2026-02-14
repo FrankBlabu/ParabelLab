@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import type { JSX } from 'react';
 import Sidebar from './Sidebar';
+import logoIcon from '/icon.png';
 
 /**
  * AppShell Layout Component
@@ -64,7 +65,7 @@ export default function AppShell(): JSX.Element {
           {/* App Icon and Title */}
           <div className="flex items-center gap-3">
             <img
-              src="icon.png"
+              src={logoIcon}
               alt="Parabola Logo"
               className="w-8 h-8"
             />
