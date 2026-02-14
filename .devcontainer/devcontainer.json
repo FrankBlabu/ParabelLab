@@ -1,8 +1,10 @@
 {
   "name": "ParabelLab Development",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:20-alpine",
+  "image": "mcr.microsoft.com/devcontainers/base:alpine",
   "features": {
-    "ghcr.io/devcontainers/features/git:1": {}
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "24"
+    }
   },
   "customizations": {
     "vscode": {
