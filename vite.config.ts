@@ -23,7 +23,8 @@ export default defineConfig({
     ]),
     renderer(),
   ],
-  base: process.env.ELECTRON === 'true' ? './' : '/',
+  // Use relative base for Electron compatibility
+  base: './',
   build: {
     rollupOptions: {
       output: {
