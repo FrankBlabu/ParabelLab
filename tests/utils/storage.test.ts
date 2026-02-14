@@ -92,7 +92,7 @@ describe('storage utilities', () => {
      */
     it('should return default progress when data is corrupted', () => {
       // Set invalid JSON
-      localStorageMock.setItem('parabellab-progress', 'invalid json');
+      localStorageMock.setItem('parabola-progress', 'invalid json');
 
       const progress = loadProgress();
 
@@ -114,7 +114,7 @@ describe('storage utilities', () => {
         totalExercisesCompleted: 'not a number',
       };
 
-      localStorageMock.setItem('parabellab-progress', JSON.stringify(invalidData));
+      localStorageMock.setItem('parabola-progress', JSON.stringify(invalidData));
 
       const progress = loadProgress();
 
@@ -149,7 +149,7 @@ describe('storage utilities', () => {
 
       saveProgress(progress);
 
-      const stored = localStorageMock.getItem('parabellab-progress');
+      const stored = localStorageMock.getItem('parabola-progress');
       expect(stored).toBeDefined();
       expect(JSON.parse(stored!)).toEqual(progress);
     });
@@ -207,10 +207,10 @@ describe('storage utilities', () => {
       };
 
       saveProgress(progress);
-      expect(localStorageMock.getItem('parabellab-progress')).toBeDefined();
+      expect(localStorageMock.getItem('parabola-progress')).toBeDefined();
 
       resetProgress();
-      expect(localStorageMock.getItem('parabellab-progress')).toBeNull();
+      expect(localStorageMock.getItem('parabola-progress')).toBeNull();
 
       const loaded = loadProgress();
       expect(loaded.totalExercisesCompleted).toBe(0);

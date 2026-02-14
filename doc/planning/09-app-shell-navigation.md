@@ -20,7 +20,7 @@ No.
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│  Header: "ParabelLab" Logo + Title                   │
+│  Header: "Parabola" Logo + Title                   │
 ├────────────┬─────────────────────────────────────────┤
 │            │                                         │
 │  Sidebar   │         Content Area                    │
@@ -95,7 +95,7 @@ A landing page with:
 
 ### 9.4 Implement HomePage (`src/pages/HomePage.tsx`)
 
-- Welcome heading: "Willkommen bei ParabelLab!"
+- Welcome heading: "Willkommen bei Parabola!"
 - Brief description text
 - Module cards with:
   - Module title

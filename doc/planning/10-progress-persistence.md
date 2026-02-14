@@ -40,7 +40,7 @@ interface AppProgress {
 
 ### Storage Strategy
 
-- Use `localStorage` with key `parabellab-progress`
+- Use `localStorage` with key `parabola-progress`
 - JSON serialization/deserialization
 - Graceful handling of:
   - Missing or corrupted data → reset to defaults

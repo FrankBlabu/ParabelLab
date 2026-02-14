@@ -219,7 +219,7 @@
 - **Avoid multiple match errors in tests**: When testing components that render the same text multiple
   times (e.g., "Parabel-Explorer" in both sidebar navigation and main content), use more specific
   queries. Instead of `getByText('Parabel-Explorer')` (which fails with multiple matches), use:
-  - A unique substring that only appears once: `getByText(/ParabelLab ist deine interaktive/)`
+  - A unique substring that only appears once: `getByText(/Parabola ist deine interaktive/)`
   - Query scoping with `within()`: `within(screen.getByTestId('main-content')).getByText(...)`
   - Different text patterns or test IDs to distinguish between instances
 - **NavLink active state with `end` prop**: When using React Router's `NavLink` for navigation, set
@@ -339,3 +339,26 @@
 - **Favicon and meta tags**: Update `index.html` with a proper favicon (using the project icon),
   descriptive title in German, and a meta description for SEO and browser tabs. Use type="image/png"
   for PNG favicons instead of type="image/svg+xml".
+
+## Issue 37 — Rename to 'Parabola'
+
+- **Repository name vs. application name**: When renaming an application, the repository name on GitHub
+  can remain unchanged. Only update the application name in source code, documentation, and user-facing
+  text. Repository URLs in documentation (clone commands, issue links, etc.) should keep the original
+  repository name.
+- **localStorage key naming**: When renaming an application, update localStorage keys to match the new
+  name to avoid confusion. This is a breaking change for existing users (their progress will be lost),
+  but it's cleaner than maintaining legacy key names. Document this in release notes if needed.
+- **Systematic find-replace workflow**: For comprehensive renaming tasks, use a systematic approach:
+  1. First, search for all occurrences with case-insensitive grep to identify all files
+  2. Group files by category (source, tests, docs, config)
+  3. Update each category separately to track progress
+  4. Use `replace_all` parameter in Edit tool for files with many occurrences
+  5. Verify with grep that no unwanted occurrences remain
+  6. Run checks and tests to ensure nothing broke
+- **Test expectations must match implementation**: When renaming UI text, all test assertions that
+  check for that text must be updated. Use grep to find test files that reference the old name
+  (e.g., `getByText('Old Name')`) to ensure no tests are missed.
+- **Using sed for batch updates**: For planning/documentation files that don't require reading first,
+  `sed -i 's/OldName/NewName/g' file1 file2 file3` is efficient for batch replacements across
+  multiple files at once.

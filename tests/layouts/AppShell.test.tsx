@@ -31,14 +31,14 @@ describe('AppShell', () => {
    * Test: AppShell renders the header with app title and logo
    *
    * Expected outcome:
-   * - The header contains "ParabelLab" text
+   * - The header contains "Parabola" text
    * - The logo image is displayed with correct alt text
    */
   it('renders header with app title and logo', () => {
     renderAppShell();
 
-    expect(screen.getByText('ParabelLab')).toBeInTheDocument();
-    expect(screen.getByAltText('ParabelLab Logo')).toBeInTheDocument();
+    expect(screen.getByText('Parabola')).toBeInTheDocument();
+    expect(screen.getByAltText('Parabola Logo')).toBeInTheDocument();
   });
 
   /**

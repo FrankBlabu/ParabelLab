@@ -1,14 +1,14 @@
-# Benutzerhandbuch — ParabelLab
+# Benutzerhandbuch — Parabola
 
-## Willkommen bei ParabelLab!
+## Willkommen bei Parabola!
 
-ParabelLab ist eine interaktive Lernplattform für quadratische Funktionen, entwickelt für Schülerinnen und Schüler der 9. Klasse. Hier lernst du spielerisch, wie Parabeln funktionieren und wie man zwischen verschiedenen Darstellungsformen umrechnet.
+Parabola ist eine interaktive Lernplattform für quadratische Funktionen, entwickelt für Schülerinnen und Schüler der 9. Klasse. Hier lernst du spielerisch, wie Parabeln funktionieren und wie man zwischen verschiedenen Darstellungsformen umrechnet.
 
 ## Für Schülerinnen und Schüler
 
-### Was ist ParabelLab?
+### Was ist Parabola?
 
-ParabelLab hilft dir, quadratische Funktionen besser zu verstehen. Du kannst:
+Parabola hilft dir, quadratische Funktionen besser zu verstehen. Du kannst:
 
 - **Parabeln erkunden**: Experimentiere mit den Parametern einer Parabel und sieh sofort, wie sich die Kurve verändert
 - **Umformungen üben**: Lerne, wie man zwischen Scheitelpunktform und Normalform umrechnet
@@ -19,7 +19,7 @@ ParabelLab hilft dir, quadratische Funktionen besser zu verstehen. Du kannst:
 1. **Starte auf der Startseite**: Dort siehst du alle verfügbaren Module
 2. **Wähle ein Modul**: Klicke auf eine Karte, um zu beginnen
 3. **Folge den Schritten**: Jede Aufgabe ist in kleine Schritte unterteilt
-4. **Erhalte sofortiges Feedback**: ParabelLab sagt dir sofort, ob deine Antwort richtig ist
+4. **Erhalte sofortiges Feedback**: Parabola sagt dir sofort, ob deine Antwort richtig ist
 
 ### Der Parabel-Explorer
 
@@ -27,7 +27,7 @@ Im **Parabel-Explorer** kannst du frei experimentieren:
 
 - **Schieberegler**: Verändere die Parameter `a`, `d` und `e`
 - **Scheitelpunktform**: Die Gleichung `f(x) = a(x-d)² + e` zeigt die aktuelle Parabel
-- **Normalform**: ParabelLab rechnet automatisch in die Form `f(x) = ax² + bx + c` um
+- **Normalform**: Parabola rechnet automatisch in die Form `f(x) = ax² + bx + c` um
 - **Grafik**: Sieh die Parabel in einem Koordinatensystem mit Scheitelpunkt und Nullstellen
 
 **Tipp**: Probiere aus, was passiert, wenn du `a` negativ machst oder `d` und `e` veränderst!
@@ -74,7 +74,7 @@ Trainiere grundlegende algebraische Fähigkeiten in drei Kategorien:
 
 ### Dein Fortschritt
 
-ParabelLab speichert deinen Fortschritt automatisch:
+Parabola speichert deinen Fortschritt automatisch:
 
 - **Anzahl gelöster Aufgaben** wird auf der Startseite angezeigt
 - **Fortschritt pro Modul** siehst du auf den Modulkarten
@@ -92,8 +92,8 @@ ParabelLab speichert deinen Fortschritt automatisch:
 
 ### Häufig gestellte Fragen
 
-**Kann ich ParabelLab offline nutzen?**
-Nein, ParabelLab benötigt eine Internetverbindung beim ersten Laden. Danach funktioniert die App aber auch ohne Internet, solange du die Seite nicht neu lädst.
+**Kann ich Parabola offline nutzen?**
+Nein, Parabola benötigt eine Internetverbindung beim ersten Laden. Danach funktioniert die App aber auch ohne Internet, solange du die Seite nicht neu lädst.
 
 **Werden meine Daten gespeichert?**
 Ja, dein Fortschritt wird lokal in deinem Browser gespeichert. Es werden keine Daten an einen Server gesendet.
@@ -110,7 +110,7 @@ Nein, du arbeitest immer an einer Aufgabe zur Zeit. Mit dem Button "Neue Aufgabe
 
 ### Einsatz im Unterricht
 
-ParabelLab eignet sich für:
+Parabola eignet sich für:
 
 - **Eigenständiges Üben**: Schülerinnen und Schüler können in ihrem eigenen Tempo arbeiten
 - **Hausaufgaben**: Die Module können als Übungsmaterial aufgegeben werden
@@ -133,7 +133,7 @@ Die App deckt folgende Kompetenzen ab (Lehrplan Mathematik Klasse 9):
 - **Browser**: Chrome, Firefox, Safari oder Edge (aktuelle Version)
 - **Geräte**: Desktop-Computer, Laptop, Tablet (Smartphone möglich, aber nicht optimal)
 - **Internetverbindung**: Bei der ersten Nutzung erforderlich
-- **Keine Installation**: ParabelLab läuft direkt im Browser
+- **Keine Installation**: Parabola läuft direkt im Browser
 
 ### Datenschutz
 
@@ -146,13 +146,13 @@ Die App deckt folgende Kompetenzen ab (Lehrplan Mathematik Klasse 9):
 
 Bei Fragen oder Problemen:
 
-- **GitHub Issues**: [github.com/FrankBlabu/ParabelLab/issues](https://github.com/FrankBlabu/ParabelLab/issues)
+- **GitHub Issues**: [github.com/FrankBlabu/Parabola/issues](https://github.com/FrankBlabu/Parabola/issues)
 - **Dokumentation**: Siehe README.md im Projektverzeichnis
 
 ### Lizenz
 
-ParabelLab ist freie Software und steht unter einer Open-Source-Lizenz. Sie dürfen die App frei nutzen, anpassen und weitergeben.
+Parabola ist freie Software und steht unter einer Open-Source-Lizenz. Sie dürfen die App frei nutzen, anpassen und weitergeben.
 
 ---
 
-**Viel Erfolg beim Lernen mit ParabelLab! 📈**
+**Viel Erfolg beim Lernen mit Parabola! 📈**

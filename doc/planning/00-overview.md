@@ -1,8 +1,8 @@
-# ParabelLab — Planning Overview
+# Parabola — Planning Overview
 
 ## Project Description
 
-ParabelLab is an interactive web application for supporting math education. The
+Parabola is an interactive web application for supporting math education. The
 target audience is a 9th-grade student learning about quadratic functions
 (parabolas). The application aims to promote understanding of parabolas in
 different representation forms through playful and visual interaction.
@@ -229,7 +229,7 @@ All            ──▶ 12 Final Polish
 ## Proposed File Structure
 
 ```
-ParabelLab/
+Parabola/
 ├── public/
 │   └── favicon.svg
 ├── src/

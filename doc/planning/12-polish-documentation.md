@@ -22,7 +22,7 @@ No.
 - Smooth transitions between pages (CSS transitions or React Transition Group)
 - Loading states for any async operations
 - Empty states with helpful messages
-- Favicon and page title: "ParabelLab — Parabeln lernen"
+- Favicon and page title: "Parabola — Parabeln lernen"
 - App icon in the header (from `assets/icon.png`)
 
 ### 12.2 Performance Optimization

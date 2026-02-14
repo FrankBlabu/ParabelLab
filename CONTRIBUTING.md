@@ -1,6 +1,6 @@
-# Beitragen zu ParabelLab
+# Beitragen zu Parabola
 
-Vielen Dank für dein Interesse, zu ParabelLab beizutragen! Diese Anleitung hilft dir, schnell loszulegen.
+Vielen Dank für dein Interesse, zu Parabola beizutragen! Diese Anleitung hilft dir, schnell loszulegen.
 
 ## 🚀 Erste Schritte
 
@@ -8,8 +8,8 @@ Vielen Dank für dein Interesse, zu ParabelLab beizutragen! Diese Anleitung hilf
 
 1. **Repository forken und klonen**
    ```bash
-   git clone https://github.com/<dein-username>/ParabelLab.git
-   cd ParabelLab
+   git clone https://github.com/<dein-username>/Parabola.git
+   cd Parabola
    ```
 
 2. **Abhängigkeiten installieren**
@@ -38,7 +38,7 @@ Vielen Dank für dein Interesse, zu ParabelLab beizutragen! Diese Anleitung hilf
 
 ### 1. Issue auswählen oder erstellen
 
-- Schau dir die [offenen Issues](https://github.com/FrankBlabu/ParabelLab/issues) an
+- Schau dir die [offenen Issues](https://github.com/FrankBlabu/Parabola/issues) an
 - Kommentiere das Issue, wenn du daran arbeiten möchtest
 - Erstelle ein neues Issue für neue Features oder Bugs
 
@@ -369,7 +369,7 @@ Der Slider springt sofort zurück auf 0.
 ### System
 - Browser: Firefox 120
 - OS: Windows 11
-- ParabelLab Version: main branch (commit abc123)
+- Parabola Version: main branch (commit abc123)
 
 ### Screenshots
 [Screenshot hier einfügen]
@@ -441,8 +441,8 @@ params.a = newA;
 
 ## 🙋 Fragen?
 
-- **Diskussionen**: [GitHub Discussions](https://github.com/FrankBlabu/ParabelLab/discussions)
-- **Issues**: [GitHub Issues](https://github.com/FrankBlabu/ParabelLab/issues)
+- **Diskussionen**: [GitHub Discussions](https://github.com/FrankBlabu/Parabola/discussions)
+- **Issues**: [GitHub Issues](https://github.com/FrankBlabu/Parabola/issues)
 
 ## 📜 Lizenz
 

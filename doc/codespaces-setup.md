@@ -2,13 +2,13 @@
 
 ## Overview
 
-This document describes how to set up and develop the ParabelLab project in GitHub Codespaces. GitHub Codespaces provides a complete development environment in the cloud, allowing you to develop, build, and test the project entirely within your browser.
+This document describes how to set up and develop the Parabola project in GitHub Codespaces. GitHub Codespaces provides a complete development environment in the cloud, allowing you to develop, build, and test the project entirely within your browser.
 
 ## Getting Started with Codespaces
 
 ### Creating a New Codespace
 
-1. Navigate to the [ParabelLab repository](https://github.com/FrankBlabu/ParabelLab) on GitHub
+1. Navigate to the [Parabola repository](https://github.com/FrankBlabu/Parabola) on GitHub
 2. Click the green **Code** button
 3. Select the **Codespaces** tab
 4. Click **Create codespace on main** (or your desired branch)

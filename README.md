@@ -1,13 +1,13 @@
-# ParabelLab
+# Parabola
 
 > Interaktive Webanwendung zum Lernen und Üben von quadratischen Funktionen
 (Parabeln) für Schülerinnen und Schüler der 9. Klasse.
 
-![ParabelLab Logo](assets/icon.png)
+![Parabola Logo](assets/icon.png)
 
 ## 🎯 Über das Projekt
 
-ParabelLab ist eine browserbasierte, interaktive Lernplattform für quadratische Funktionen. Die Anwendung richtet sich an Schülerinnen und Schüler der 9. Klasse und hilft ihnen, das Konzept von Parabeln zu verstehen sowie die Umrechnung zwischen verschiedenen Darstellungsformen zu üben.
+Parabola ist eine browserbasierte, interaktive Lernplattform für quadratische Funktionen. Die Anwendung richtet sich an Schülerinnen und Schüler der 9. Klasse und hilft ihnen, das Konzept von Parabeln zu verstehen sowie die Umrechnung zwischen verschiedenen Darstellungsformen zu üben.
 
 ### Features
 
@@ -79,7 +79,7 @@ Tasks können über die Command Palette (`Ctrl+Shift+P` → "Tasks: Run Task") g
 ### Projektstruktur
 
 ```
-ParabelLab/
+Parabola/
 ├── src/
 │   ├── components/      # React-Komponenten
 │   │   ├── graph/       # Koordinatensystem und Parabel-Darstellung
@@ -252,7 +252,7 @@ Die wichtigsten Module sind inline dokumentiert. Hier ein Überblick:
 
 ## 🌐 Browser-Kompatibilität
 
-ParabelLab wird auf folgenden Browsern getestet und unterstützt:
+Parabola wird auf folgenden Browsern getestet und unterstützt:
 
 - ✅ Chrome (letzte 2 Versionen)
 - ✅ Firefox (letzte 2 Versionen)
@@ -290,7 +290,7 @@ npx gh-pages -d dist
 
 ### GitHub Codespaces
 
-ParabelLab ist für die Entwicklung in GitHub Codespaces vorbereitet. Siehe [doc/codespaces-setup.md](doc/codespaces-setup.md) für Details.
+Parabola ist für die Entwicklung in GitHub Codespaces vorbereitet. Siehe [doc/codespaces-setup.md](doc/codespaces-setup.md) für Details.
 
 ## 📄 Lizenz
 
