@@ -32,12 +32,12 @@ describe('HomePage', () => {
    * Test: HomePage renders the welcome heading
    *
    * Expected outcome:
-   * - The main heading "Willkommen bei ParabelLab!" is displayed
+   * - The main heading "Willkommen bei Parabola!" is displayed
    */
   it('renders welcome heading', () => {
     renderHomePage();
 
-    expect(screen.getByText('Willkommen bei ParabelLab!')).toBeInTheDocument();
+    expect(screen.getByText('Willkommen bei Parabola!')).toBeInTheDocument();
   });
 
   /**
@@ -49,7 +49,7 @@ describe('HomePage', () => {
   it('renders app logo', () => {
     renderHomePage();
 
-    const logos = screen.getAllByAltText('ParabelLab Logo');
+    const logos = screen.getAllByAltText('Parabola Logo');
     expect(logos.length).toBeGreaterThan(0);
   });
 
@@ -63,7 +63,7 @@ describe('HomePage', () => {
     renderHomePage();
 
     expect(
-      screen.getByText(/ParabelLab ist deine interaktive Lernplattform/),
+      screen.getByText(/Parabola ist deine interaktive Lernplattform/),
     ).toBeInTheDocument();
   });
 

@@ -166,7 +166,7 @@ describe('useProgress hook', () => {
 
     // Wait for localStorage to be updated
     await waitFor(() => {
-      expect(localStorageMock.getItem('parabellab-progress')).toBeTruthy();
+      expect(localStorageMock.getItem('parabola-progress')).toBeTruthy();
     });
 
     unmount();

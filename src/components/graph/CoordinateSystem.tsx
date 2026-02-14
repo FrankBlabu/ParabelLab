@@ -7,7 +7,7 @@
  * `preserveAspectRatio`.
  *
  * This is the primary visualization component used across the explorer and
- * all learning modules of ParabelLab.
+ * all learning modules of Parabola.
  */
 
 import React from 'react';

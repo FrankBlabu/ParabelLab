@@ -19,7 +19,7 @@ describe('App Component', () => {
     );
 
     // Verify that the AppShell and HomePage are present
-    const heading = screen.getByText('Willkommen bei ParabelLab!');
+    const heading = screen.getByText('Willkommen bei Parabola!');
     expect(heading).toBeInTheDocument();
   });
 
@@ -31,14 +31,14 @@ describe('App Component', () => {
     );
 
     // Verify AppShell components are present
-    expect(screen.getByText('ParabelLab')).toBeInTheDocument();
+    expect(screen.getByText('Parabola')).toBeInTheDocument();
     expect(screen.getByTestId('sidebar')).toBeInTheDocument();
     expect(screen.getByTestId('main-content')).toBeInTheDocument();
 
     // Verify HomePage content is shown
-    expect(screen.getByText('Willkommen bei ParabelLab!')).toBeInTheDocument();
+    expect(screen.getByText('Willkommen bei Parabola!')).toBeInTheDocument();
     expect(
-      screen.getByText(/ParabelLab ist deine interaktive Lernplattform/),
+      screen.getByText(/Parabola ist deine interaktive Lernplattform/),
     ).toBeInTheDocument();
   });
 });

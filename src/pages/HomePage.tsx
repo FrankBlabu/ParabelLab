@@ -117,7 +117,7 @@ function ModuleCard({
 /**
  * HomePage Component
  *
- * Landing page of the ParabelLab application.
+ * Landing page of the Parabola application.
  * Displays:
  * - Welcome heading
  * - Brief description
@@ -145,14 +145,14 @@ export default function HomePage(): JSX.Element {
       <section className="text-center mb-12">
         <img
           src="/assets/icon.png"
-          alt="ParabelLab Logo"
+          alt="Parabola Logo"
           className="w-24 h-24 mx-auto mb-6"
         />
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Willkommen bei ParabelLab!
+          Willkommen bei Parabola!
         </h1>
         <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-          ParabelLab ist deine interaktive Lernplattform für quadratische Funktionen.
+          Parabola ist deine interaktive Lernplattform für quadratische Funktionen.
           Erkunde Parabeln, übe Umformungen zwischen Scheitelpunkt- und Normalform,
           und trainiere grundlegende algebraische Rechenregeln.
         </p>

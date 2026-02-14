@@ -8,7 +8,7 @@
 
 import { AppProgress } from '../types/progress';
 
-const STORAGE_KEY = 'parabellab-progress';
+const STORAGE_KEY = 'parabola-progress';
 
 /**
  * Creates a default empty progress state.

@@ -27,7 +27,7 @@ function LoadingFallback(): JSX.Element {
 /**
  * Root application component.
  *
- * Provides the main routing structure and layout for the ParabelLab application.
+ * Provides the main routing structure and layout for the Parabola application.
  * Uses AppShell as the parent layout with sidebar navigation and header.
  *
  * Routes:

@@ -65,10 +65,10 @@ export default function AppShell(): JSX.Element {
           <div className="flex items-center gap-3">
             <img
               src="/assets/icon.png"
-              alt="ParabelLab Logo"
+              alt="Parabola Logo"
               className="w-8 h-8"
             />
-            <h1 className="text-xl font-bold">ParabelLab</h1>
+            <h1 className="text-xl font-bold">Parabola</h1>
           </div>
         </div>
       </header>
