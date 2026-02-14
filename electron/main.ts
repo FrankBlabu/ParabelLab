@@ -20,7 +20,7 @@ const createWindow = () => {
       contextIsolation: true,
       sandbox: true,
     },
-    icon: path.join(__dirname, '../assets/icon.png'),
+    icon: path.join(__dirname, '../dist/icon.png'),
   });
 
   // Load the app

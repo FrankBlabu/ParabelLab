@@ -144,7 +144,7 @@ export default function HomePage(): JSX.Element {
       {/* Welcome Section */}
       <section className="text-center mb-12">
         <img
-          src="/assets/icon.png"
+          src="icon.png"
           alt="Parabola Logo"
           className="w-24 h-24 mx-auto mb-6"
         />

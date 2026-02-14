@@ -64,7 +64,7 @@ export default function AppShell(): JSX.Element {
           {/* App Icon and Title */}
           <div className="flex items-center gap-3">
             <img
-              src="/assets/icon.png"
+              src="icon.png"
               alt="Parabola Logo"
               className="w-8 h-8"
             />

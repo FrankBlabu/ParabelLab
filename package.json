@@ -66,8 +66,7 @@
     },
     "files": [
       "dist/**/*",
-      "dist-electron/**/*",
-      "assets/**/*"
+      "dist-electron/**/*"
     ],
     "linux": {
       "target": [

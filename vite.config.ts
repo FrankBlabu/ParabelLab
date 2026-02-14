@@ -23,8 +23,13 @@ export default defineConfig({
     ]),
     renderer(),
   ],
+  base: process.env.ELECTRON === 'true' ? './' : '/',
   build: {
-    // Ensure proper base path for Electron
-    base: './',
+    rollupOptions: {
+      output: {
+        // Use relative paths for assets in Electron builds
+        assetFileNames: 'assets/[name]-[hash][extname]',
+      },
+    },
   },
 });
