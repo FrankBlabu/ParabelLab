@@ -4,7 +4,7 @@ import electron from 'vite-plugin-electron';
 import renderer from 'vite-plugin-electron-renderer';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     electron([
@@ -23,8 +23,8 @@ export default defineConfig({
     ]),
     renderer(),
   ],
-  // Use relative base for Electron compatibility
-  base: './',
+  // Use relative base for Electron builds, absolute for web
+  base: mode === 'electron' ? './' : '/',
   build: {
     rollupOptions: {
       output: {
@@ -33,4 +33,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));
