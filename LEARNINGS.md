@@ -395,5 +395,6 @@
 - **Asset paths in Electron**: Static assets must be in Vite's `public/` directory to be copied to `dist/`
   during build. Reference them with relative paths (e.g., `icon.png` instead of `/assets/icon.png`) to work
   correctly in Electron's file:// protocol. Absolute paths starting with `/` don't resolve properly when the
-  app is loaded from the file system rather than a web server. Set `base: './'` in Vite config for Electron
-  builds to ensure all asset references use relative paths.
+  app is loaded from the file system rather than a web server. **Always** set `base: './'` in Vite config
+  (not conditionally) to ensure all asset references in the built HTML use relative paths (`./assets/...`).
+  Conditional base paths based on environment variables don't work because the variable isn't set during build.
