@@ -392,3 +392,8 @@
   process must use ES module syntax. Use `import.meta.url` with `fileURLToPath()` to get `__dirname`
   equivalent, and use `import` instead of `require()`. Avoid dependencies that require CommonJS patterns
   like `electron-squirrel-startup` unless absolutely necessary.
+- **Asset paths in Electron**: Static assets must be in Vite's `public/` directory to be copied to `dist/`
+  during build. Reference them with relative paths (e.g., `icon.png` instead of `/assets/icon.png`) to work
+  correctly in Electron's file:// protocol. Absolute paths starting with `/` don't resolve properly when the
+  app is loaded from the file system rather than a web server. Set `base: './'` in Vite config for Electron
+  builds to ensure all asset references use relative paths.
