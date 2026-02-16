@@ -1,8 +1,12 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import type { JSX } from 'react';
 import AppShell from './layouts/AppShell';
 import HomePage from './pages/HomePage';
+
+// Detect if running in Electron
+const isElectron = window.location.protocol === 'file:';
+const Router = isElectron ? HashRouter : BrowserRouter;
 
 // Lazy-load module pages for better performance
 const ExplorerPage = lazy(async () => import('./pages/ExplorerPage'));

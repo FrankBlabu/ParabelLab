@@ -46,12 +46,23 @@ Die Anwendung ist dann unter [http://localhost:5173](http://localhost:5173) erre
 ### Verfügbare Skripte
 
 ```bash
-npm run dev       # Startet den Entwicklungsserver mit Hot-Reload
-npm run build     # Erstellt einen optimierten Production-Build
-npm run preview   # Zeigt den Production-Build lokal an
-npm run lint      # Führt ESLint-Prüfungen durch
-npm run test      # Führt alle Tests aus (Vitest)
-npm run test:ui   # Öffnet die Vitest UI
+# Web Development
+npm run dev           # Startet den Entwicklungsserver mit Hot-Reload
+npm run build         # Erstellt einen optimierten Production-Build
+npm run preview       # Zeigt den Production-Build lokal an
+
+# Desktop App Development
+npm run dev:electron  # Startet die Electron-App im Development-Modus
+npm run build:electron  # Erstellt Desktop-App für aktuelles System
+npm run build:linux   # Erstellt Linux AppImage und .deb
+npm run build:win     # Erstellt Windows Installer und Portable
+npm run build:mac     # Erstellt macOS .dmg und .zip
+
+# Quality Checks
+npm run lint          # Führt ESLint-Prüfungen durch
+npm run typecheck     # Führt TypeScript-Typprüfung durch
+npm run test          # Führt alle Tests aus (Vitest)
+npm run test:ui       # Öffnet die Vitest UI
 ```
 
 ### VSCode Tasks
@@ -71,6 +82,7 @@ Tasks können über die Command Palette (`Ctrl+Shift+P` → "Tasks: Run Task") g
 
 - **Framework**: React 18 mit TypeScript
 - **Build Tool**: Vite
+- **Desktop**: Electron (für standalone Deployment)
 - **Styling**: Tailwind CSS
 - **Routing**: React Router v6
 - **Testing**: Vitest + React Testing Library
@@ -92,6 +104,7 @@ Parabola/
 │   ├── pages/           # Seiten-Komponenten
 │   ├── types/           # TypeScript-Typdefinitionen
 │   └── utils/           # Hilfsfunktionen
+├── electron/            # Electron main process für Desktop-App
 ├── tests/               # Tests (Mirror-Struktur zu src/)
 ├── doc/                 # Projektdokumentation
 │   ├── planning/        # Technische Planungsdokumente
@@ -207,6 +220,10 @@ Beiträge sind willkommen! Bitte beachte folgende Richtlinien:
 
 - [Benutzerhandbuch](doc/BENUTZERHANDBUCH.md) — Anleitung für Schüler, Eltern und Lehrkräfte
 
+### Für Administratoren
+
+- [Deployment-Anleitung](doc/DEPLOYMENT.md) — Desktop-App und Web-Deployment
+
 ### Für Entwickler
 
 - [00 - Überblick](doc/planning/00-overview.md) — Architektur, Technologie-Entscheidungen, Roadmap
@@ -263,7 +280,27 @@ Internet Explorer wird **nicht** unterstützt.
 
 ## 📦 Deployment
 
-### Production Build
+### Standalone Desktop Application
+
+Parabola kann als eigenständige Desktop-Anwendung für Linux, Windows und macOS gebaut werden:
+
+```bash
+# Build für das aktuelle System
+npm run build:electron
+
+# Spezifische Plattformen
+npm run build:linux    # Linux AppImage und .deb
+npm run build:win      # Windows NSIS Installer und Portable
+npm run build:mac      # macOS .dmg und .zip
+```
+
+Die Installatoren befinden sich nach dem Build im `release/` Verzeichnis.
+
+**Hinweis**: Cross-Plattform-Builds funktionieren möglicherweise nicht ohne weiteres. Es wird empfohlen, die Builds auf der jeweiligen Zielplattform zu erstellen.
+
+### Web Deployment
+
+#### Production Build
 
 ```bash
 # Build erstellen
@@ -275,7 +312,7 @@ npm run preview
 
 Der optimierte Build befindet sich in `dist/`. Diese Dateien können auf einem beliebigen statischen Webserver gehostet werden.
 
-### GitHub Pages
+#### GitHub Pages
 
 Das Projekt kann einfach auf GitHub Pages deployed werden:
 
@@ -288,7 +325,7 @@ npm run build
 npx gh-pages -d dist
 ```
 
-### GitHub Codespaces
+#### GitHub Codespaces
 
 Parabola ist für die Entwicklung in GitHub Codespaces vorbereitet. Siehe [doc/codespaces-setup.md](doc/codespaces-setup.md) für Details.
 
